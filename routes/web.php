@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SalaryController;
+use App\Models\Salary;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/salary/create', [SalaryController::class, 'create'])->name('salary.create');
+Route::get('/dashboard', SalaryController::class .'@store')->name('salary.store');
+Route::post('/salary', [SalaryController::class, 'store'])->name('salary.store');
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
 require __DIR__.'/auth.php';
