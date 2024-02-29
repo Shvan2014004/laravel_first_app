@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Salary;
+use Carbon\Carbon;
+use App\Models\Category;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Auth\Events\Registered;
-use App\Providers\RouteServiceProvider;
-use Carbon\Carbon;
 
-class SalaryController extends Controller
+
+class CategoryController extends Controller
 {
     /**
      * Display the registration view.
      */
     public function create(): View
     {
-        return view('forms.salary');
+        return view('forms.category');
     }
 
     /**
@@ -31,8 +28,12 @@ class SalaryController extends Controller
     {
         
 
-        Salary::create($request->all());
-          $data['date'] = Carbon::now();
+       // Category::create($request->all());
+
+        Category::create([
+            'category'=>$request->category,
+        ]);
+          //$data['date'] = Carbon::now();
 
         //event(new Registered($user));
 
