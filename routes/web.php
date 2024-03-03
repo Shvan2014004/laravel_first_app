@@ -21,14 +21,14 @@ use App\Http\Controllers\SubCategoryController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::post('/', IncomeController::class .'@index')->name('income.index');
-Route::get('/income/create', [IncomeController::class, 'create'])->name('income.create');
-
 Route::post('/income', [IncomeController::class, 'store'])->name('income.store');
+Route::get('income', [IncomeController::class,'index'])->name('income.index');
+Route::post('/income',  [IncomeController::class,'store'])->name('income.store');
+Route::delete('/income/{id}',[IncomeController::class,'destroy'])->name('income.destroy');
+Route::match(['get', 'put'], '/income/{id}', [IncomeController::class,'update'])->name('income.update');
+
+
 Route::post('/expence', [ExpencesController::class, 'store'])->name('expence.store');
-
-Route::get('/incomeReport', [IncomeReportController::class, 'index']);
-
 Route::get('expence', [ExpencesController::class,'index'])->name('expence.index');
 Route::post('/expence',  [ExpencesController::class,'store'])->name('expence.store');
 Route::delete('/expence/{id}',[ExpencesController::class,'destroy'])->name('expence.destroy');
@@ -59,11 +59,7 @@ Route::post('/assets/create', [AssetsController::class, 'create'])->name('assets
 Route::get('/dashboard', AssetsController::class .'@store')->name('assets.store');
 Route::post('/assets', [AssetsController::class, 'store'])->name('assets.store');
 Route::get('/assets/create',[AssetsController::class,'index']);
-<<<<<<< HEAD
 Route::get('/assets', [AssetsController::class, 'display'])->name('assets.display');
-
-=======
->>>>>>> 5a465e2b94a3f5469db3a61730f2023cd8361991
 Route::get('/', function () {
     return view('welcome');
 });

@@ -52,8 +52,8 @@
       <img src="{{asset('images/logo.jpeg')}}" alt="logo" height="100" width="100">
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="#section1">Dashboard</a></li>
-        <li><a href="#">Income</a></li>
-        <li><a href="#">Expenses</a></li>
+        <li><a href="{{route('income.index')}}">Income</a></li>
+        <li><a href="{{route('expence.index')}}">Expenses</a></li>
         <li><a href="{{route('salary.display')}}">Salary</a></li>
         <li><a href="{{route('assets.display')}}">Assets</a></li>
       </ul><br>

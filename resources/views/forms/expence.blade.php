@@ -90,8 +90,7 @@
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->amount }}</td>
                                         <td>{{ $item->type }}</td>
-                                        <td
-                                            style="display: flex; flex-wrap: wrap; justify-content: space-around; ">
+                                        <td style="display: flex; flex-wrap: wrap; justify-content: space-around; ">
                                             {{-- <a href="{{ route('employee.show',$employee->id) }}" class="btn btn-primary btn-xs py-0" style="margin:2px;">Show</a>
                             <a href="{{ route('employee.edit',$employee->id) }}" class="btn btn-warning btn-xs py-0" style="margin:2px;">Edit</a> --}}
                                             <form action="{{ route('expence.update', $item->id) }}" method="POST">
@@ -135,7 +134,7 @@
                             <h4 class="modal-title">Add Expenses</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal" method="POST" action="{{ route('expence.store') }}">
+                            <form class="form-horizontal" id="expenseForm"  method="POST" action="{{ route('expence.store') }}">
 
                                 {{ csrf_field() }}
                                 <div class="form-group">
@@ -162,14 +161,15 @@
                                         <option value="Bank">Bank</option>
                                     </select>
                                 </div>
-                                <div class="form-group" style="margin-top: 20px;">
-                                    <button type="submit" class="btn btn-primary" value="Send">Submit</button>
-                                </div>
+                              
 
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-primary" onclick="resetForm()">Reset</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -213,13 +213,14 @@
                                         <option value="Bank">Bank</option>
                                     </select>
                                 </div>
-                                <div class="form-group" style="margin-top: 20px;">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
+
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -230,6 +231,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
+         function resetForm() {
+        document.getElementById("expenseForm").reset();
+    }
         $(document).ready(function() {
             // Add event listener to all edit buttons
             $('.edit-expense-btn').click(function() {
@@ -267,8 +271,8 @@
                     type: 'POST', // Tunnel the PUT request through a POST request
                     data: formData,
                     success: function(response) {
+                        window.location.href = '/expence';
                         $('#editModal').modal('hide');
-                        alert('Expense updated successfully!');
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
