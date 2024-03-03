@@ -1,11 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\IncomeReportController;
+use App\Http\Controllers\ExpencesController;
 use App\Http\Controllers\AssetsController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +21,20 @@ use App\Http\Controllers\SubCategoryController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//Route::get('/assets/create',[AssetsController::class,'index'],'@index');
+Route::post('/', IncomeController::class .'@index')->name('income.index');
+Route::get('/income/create', [IncomeController::class, 'create'])->name('income.create');
+
+Route::post('/income', [IncomeController::class, 'store'])->name('income.store');
+Route::post('/expence', [ExpencesController::class, 'store'])->name('expence.store');
+
+Route::get('/incomeReport', [IncomeReportController::class, 'index']);
+
+Route::get('expence', [ExpencesController::class,'index'])->name('expence.index');
+Route::post('/expence',  [ExpencesController::class,'store'])->name('expence.store');
+Route::delete('/expence/{id}',[ExpencesController::class,'destroy'])->name('expence.destroy');
+Route::match(['get', 'put'], '/expence/{id}', [ExpencesController::class,'update'])->name('expence.update');
+
+
 
 Route::get('/salary', [SalaryController::class, 'create'])->name('salary.create');
 Route::get('/dashboard', SalaryController::class .'@store')->name('salary.store');
@@ -42,8 +59,11 @@ Route::post('/assets/create', [AssetsController::class, 'create'])->name('assets
 Route::get('/dashboard', AssetsController::class .'@store')->name('assets.store');
 Route::post('/assets', [AssetsController::class, 'store'])->name('assets.store');
 Route::get('/assets/create',[AssetsController::class,'index']);
+<<<<<<< HEAD
 Route::get('/assets', [AssetsController::class, 'display'])->name('assets.display');
 
+=======
+>>>>>>> 5a465e2b94a3f5469db3a61730f2023cd8361991
 Route::get('/', function () {
     return view('welcome');
 });
