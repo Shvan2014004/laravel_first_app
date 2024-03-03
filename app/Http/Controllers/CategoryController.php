@@ -41,5 +41,9 @@ class CategoryController extends Controller
 
         // return redirect(RouteServiceProvider::HOME);
     }
+    public function display(){
+        $data = Category::all();
+        return(view('forms.categorydisplay',compact('data')));     
+    }
 }
 

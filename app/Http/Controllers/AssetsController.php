@@ -55,5 +55,9 @@ class AssetsController extends Controller
 
         // return redirect(RouteServiceProvider::HOME);
     }
+    public function display(){
+        $data = Assets::all();
+        return(view('forms.assetsdisplay',compact('data')));     
+    }
 }
 

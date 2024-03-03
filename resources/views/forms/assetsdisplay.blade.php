@@ -1,5 +1,5 @@
 <head>
-    <title>Subcategories</title>
+    <title>Assets</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -10,14 +10,16 @@
 <table class="table table-hover">
     <tr>
         <th>No</th>
-        <th>Category</th>
+        <th>Assets</th>
         <th>Sub Category</th>
+        <th>Amount</th>
     </tr>
     @foreach ($data as $row)
     <tr>
         <td>{{$row->id}}</td>
-        <td>{{$category=\App\Models\Category::where(['id'=>$row->category_id])->pluck('category')}}</td>
-        <td>{{$row->sub_category}}</td>
+        <td>{{$row->description}}</td>
+        <td>{{$category=\App\Models\SubCategory::where(['id'=>$row->sub_category_id])->pluck('sub_category')}}</td>
+        <td>{{$row->amount}}</td>
     </tr>
     @endforeach
 </table>

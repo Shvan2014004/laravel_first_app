@@ -1,0 +1,19 @@
+.w70{
+margin: 1%,1%,1%;
+width: 70%;
+height: auto;
+float: right;
+flex: content;
+background-color: gray;
+}
+.w30{
+    margin: 1%,1%,1%;
+    width: 30%;
+    height:fit-content;
+    float: right;
+    flex: content;
+    background-color: rgb(65, 64, 64);
+    }
+.nav{
+    color: red;
+}

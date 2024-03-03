@@ -19,9 +19,11 @@ use App\Http\Controllers\SubCategoryController;
 */
 //Route::get('/assets/create',[AssetsController::class,'index'],'@index');
 
-Route::get('/salary/create', [SalaryController::class, 'create'])->name('salary.create');
+Route::get('/salary', [SalaryController::class, 'create'])->name('salary.create');
 Route::get('/dashboard', SalaryController::class .'@store')->name('salary.store');
 Route::post('/salary', [SalaryController::class, 'store'])->name('salary.store');
+Route::get('/salary', [salaryController::class, 'display'])->name('salary.display');
+//Route::get('/',[SalaryController::class,'cal'])->name('salary.cal');
 
 Route::get('/subcategory/create', [SubCategoryController::class, 'create'])->name('subcategory.create');
 Route::get('/dashboard', SubCategoryController::class .'@store')->name('subcategory.store');
@@ -33,17 +35,19 @@ Route::get('/subcategory', [SubCategoryController::class, 'display'])->name('sub
 Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
 Route::get('/dashboard', CategoryController::class .'@store')->name('category.store');
 Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+Route::get('/category', [CategoryController::class, 'display'])->name('category.display');
 
 
 Route::post('/assets/create', [AssetsController::class, 'create'])->name('assets.create');
 Route::get('/dashboard', AssetsController::class .'@store')->name('assets.store');
 Route::post('/assets', [AssetsController::class, 'store'])->name('assets.store');
 Route::get('/assets/create',[AssetsController::class,'index']);
+Route::get('/assets', [AssetsController::class, 'display'])->name('assets.display');
 
 Route::get('/', function () {
     return view('welcome');
 });
-
+//Route::get('/dashboard',)
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

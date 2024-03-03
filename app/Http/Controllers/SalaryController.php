@@ -40,5 +40,19 @@ class SalaryController extends Controller
 
         // return redirect(RouteServiceProvider::HOME);
     }
+    // public function cal(){
+    //     $sal->'no_of_workin_days';
+    // }
+    public function display(){
+        $data = Salary::all();
+        return(view('forms.salary',compact('data')));     
+    }
+    // public function cal(Request $request){
+    //     $day=$request->input('no_of_workin_days');
+    //     $sal=$request->input('salary_per_day');
+    //     $ded=$request->input('deduction');
+    //     $nsal=($day*$sal)-$ded;
+    //     return $nsal;
+    // }
 }
 
