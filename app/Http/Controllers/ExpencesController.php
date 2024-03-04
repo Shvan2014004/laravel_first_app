@@ -62,5 +62,12 @@ class ExpencesController extends Controller {
         $expence->delete();
         return redirect( '/expence' )->with( 'success', 'Record deleted successfully' );
     }
+    public function filterByMonth(Request $request)
+    {
+        $month = $request->input('month');
+        $filteredData = Expence::whereMonth('date', '=', $month)->get();
+        
+        return view('reports/expenceReport', compact('filteredData'));
+    }
 
 }
