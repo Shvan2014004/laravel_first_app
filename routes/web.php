@@ -34,9 +34,9 @@ Route::post('/expence',  [ExpencesController::class,'store'])->name('expence.sto
 Route::delete('/expence/{id}',[ExpencesController::class,'destroy'])->name('expence.destroy');
 Route::match(['get', 'put'], '/expence/{id}', [ExpencesController::class,'update'])->name('expence.update');
 
+// Route::get('/salary',[SalaryController::class,'index'])->name('salary.index');
 
-
-Route::get('/salary', [SalaryController::class, 'create'])->name('salary.create');
+Route::get('/salary', [SalaryController::class, 'index'])->name('salary.create');
 Route::get('/dashboard', SalaryController::class .'@store')->name('salary.store');
 Route::post('/salary', [SalaryController::class, 'store'])->name('salary.store');
 Route::get('/salary', [salaryController::class, 'display'])->name('salary.display');
@@ -59,11 +59,8 @@ Route::post('/assets/create', [AssetsController::class, 'create'])->name('assets
 Route::get('/dashboard', AssetsController::class .'@store')->name('assets.store');
 Route::post('/assets', [AssetsController::class, 'store'])->name('assets.store');
 Route::get('/assets/create',[AssetsController::class,'index']);
-<<<<<<< HEAD
 Route::get('/assets', [AssetsController::class, 'display'])->name('assets.display');
 
-=======
->>>>>>> 5a465e2b94a3f5469db3a61730f2023cd8361991
 Route::get('/', function () {
     return view('welcome');
 });
