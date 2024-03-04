@@ -22,7 +22,7 @@ class ExpencesController extends Controller {
             }
         )->paginate( 5 );
 
-        return view( 'expence.index', compact( 'expence', 'request' ) );
+        return view( 'forms.expence', compact( 'expence', 'request' ) );
     }
 
     public function store( Request $request ) {
