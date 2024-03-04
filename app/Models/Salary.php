@@ -2,18 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Salary extends Model
 {
     use HasFactory;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $table = 'salary';
     protected $fillable = [
         'salary_date',
@@ -24,4 +19,8 @@ class Salary extends Model
         'deduction',
         'netsalary',
     ];
+    public function getMonthNameAttribute()
+    {
+        return Carbon::parse($this->attributes['salary_date'])->format('F');
+    }
 }
