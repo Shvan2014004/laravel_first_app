@@ -22,11 +22,12 @@ use App\Http\Controllers\SubCategoryController;
 |
 */
 Route::post('/income', [IncomeController::class, 'store'])->name('income.store');
-Route::get('income', [IncomeController::class,'index'])->name('income.index');
+
 Route::post('/income',  [IncomeController::class,'store'])->name('income.store');
 Route::delete('/income/{id}',[IncomeController::class,'destroy'])->name('income.destroy');
 Route::match(['get', 'put'], '/income/{id}', [IncomeController::class,'update'])->name('income.update');
 
+Route::get('/incomeRe', [IncomeController::class,'getIncome'])->name('get-Income');
 
 Route::post('/expence', [ExpencesController::class, 'store'])->name('expence.store');
 Route::get('expence', [ExpencesController::class,'index'])->name('expence.index');

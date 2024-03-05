@@ -5,27 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Income;
 use Carbon\Carbon;
+use DataTables;
+use App\DataTables\IncomeDataTable;  
+
 
 class IncomeController extends Controller {
-    public function index( Request $request ) {
-        $income = Income::orderBy( 'id', 'desc' )
-        ->when(
-            $request->date_from && $request->date_to,
+  
 
-            function ( Builder $builder ) use ( $request ) {
-                $builder->whereBetween(
-                    DB::raw( 'DATE(created_at)' ),
-                    [
-                        $request->date_from,
-                        $request->date_to
-                    ]
-                );
-            }
-        )->paginate( 5 );
-
-        return view( 'forms.income', compact( 'income', 'request' ) );
-    }
-
+    public function index(){
+        return view('reports/incomeReport');
+     }
+     
+      public function getIncome(IncomeDataTable $dataTable){
+        // $month = $request->input('month');
+        // $filteredData = Income::whereMonth('date', '=', $month)->get();
+        
+      
+             return $dataTable->render('reports/incomeReport');
+      }
     public function store( Request $request ) {
         $this->validate( $request, [
             'date' => 'required',
