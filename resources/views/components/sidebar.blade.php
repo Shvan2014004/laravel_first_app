@@ -1,5 +1,10 @@
+
 <head>
+  <title>TS3 Accounts</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 550px}
@@ -18,36 +23,21 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse visible-xs">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#">Logo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Dashboard</a></li>
-        <li><a href="#">Age</a></li>
-        <li><a href="#">Gender</a></li>
-        <li><a href="#">Geo</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
 
-
+    <div class="col-sm-3 sidenav hidden-xs" style="width: 15%">
       <img src="{{asset('images/logo.jpeg')}}" alt="logo" height="100" width="100">
       <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="#section1">Dashboard</a></li>
+        <li class="active"><a href="{{route('dashboard')}}">Dashboard</a></li>
         <li><a href="{{route('income.index')}}">Income</a></li>
         <li><a href="{{route('expence.index')}}">Expenses</a></li>
-        <li><a href="{{route('salary.display')}}">Salary</a></li>
-        <li><a href="{{route('assets.display')}}">Assets</a></li>
+        <li><a href="{{route('salary.index')}}">Salary</a></li>
+        {{-- <li><a href="{{route('assets.index')}}">Assets</a></li> --}}
+        <li><a href="{{route('expence.filterByMonth')}}">Reports</a></li>
       </ul><br>
     </div>
     <br>
+    
+    <div class="col-sm-9" style="width: 84%">
+      
+      
 

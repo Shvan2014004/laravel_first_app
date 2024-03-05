@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\subcategory;
 use Illuminate\Support\Facades\Session;
 
 
@@ -17,6 +18,8 @@ class AssetsController extends Controller
     {
         // $category = Category::all();
         // return view('forms.assets', ['category' => $category]);
+        // $sub_cat=Subcategory::all();
+        // return view('forms.assets',compact('sub_cat'));
         $sub = Assets::orderBy('id', 'desc')
             ->when(
                 $request->date_from && $request->date_to,
@@ -32,7 +35,7 @@ class AssetsController extends Controller
                 }
             )->paginate(5);
 
-        return view('forms.assets', compact('salary', 'request'));
+        return view('forms.assets', compact('sub', 'request'));
     }
     /**
      * Display the registration view.
@@ -47,19 +50,29 @@ class AssetsController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
-    {
+    public function store( Request $request ) {
+        $this->validate( $request, [
+            'description' => 'required',
+            'amount' => 'required',
+            'sub_category' => 'required',
+            
+        ] );
 
-        Assets::create($request->all());
-        return redirect()->route('assets.create');
-        Session::flash('success', 'Data has been successfully stored.');
+        $expence = Assets::create( $request->all() );
+
+        if ( $expence ) {
+            return redirect( '/assets' )->with( 'success', 'Success' );
+        } else {
+            return back()->withInput()->with( 'error', 'Failed to save data' );
+        }
+
     }
 
-    public function display()
-    {
-        $sub = Assets::all();
-        return (view('forms.assets', compact('sub')));
-    }
+    // public function display()
+    // {
+    //     $data = Assets::all();
+    //     return (view('forms.assets', compact('data')));
+    // }
 
     public function update(Request $request, $id)
     {
@@ -79,4 +92,8 @@ class AssetsController extends Controller
         $sub->delete();
         return redirect('/assets')->with('success', 'Record deleted successfully');
     }
+    // public function retrive(){
+    //     $sub_cat=Subcategory::all();
+    //     return view('forms.assets',compact('sub_cat'));
+    // }
 }

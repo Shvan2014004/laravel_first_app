@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\IncomeReportController;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ExpencesController;
 use App\Http\Controllers\AssetsController;
 use App\Http\Controllers\SalaryController;
@@ -39,7 +40,7 @@ Route::get('/filter', [ExpencesController::class, 'filterByMonth'])->name('expen
 Route::get('/salary', [SalaryController::class, 'create'])->name('salary.create');
 Route::get('/dashboard', SalaryController::class .'@store')->name('salary.store');
 Route::post('/salary', [SalaryController::class, 'store'])->name('salary.store');
-Route::get('/salary', [salaryController::class, 'display'])->name('salary.display');
+Route::get('/salary', [salaryController::class, 'index'])->name('salary.index');
 Route::delete('/salary/{id}',[SalaryController::class,'destroy'])->name('salary.destroy');
 Route::match(['get', 'put'], '/salary/{id}', [SalaryController::class,'update'])->name('salary.update');
 //Route::get('/',[SalaryController::class,'cal'])->name('salary.cal');
@@ -47,7 +48,7 @@ Route::match(['get', 'put'], '/salary/{id}', [SalaryController::class,'update'])
 Route::get('/subcategory', [SubCategoryController::class, 'create'])->name('subcategory.create');
 Route::get('/dashboard', SubCategoryController::class .'@store')->name('subcategory.store');
 Route::post('/subcategory', [SubCategoryController::class,'store'])->name('subcategory.store');
-Route::get('/subcategory', [SubCategoryController::class, 'display'])->name('subcategory.display');
+Route::get('/subcategory', [SubCategoryController::class, 'index'])->name('subcategory.index');
 Route::delete('/subcategory/{id}',[SubCategoryController::class,'destroy'])->name('subcategory.destroy');
 Route::match(['get', 'put'], '/subcategory/{id}', [SubCategoryController::class,'update'])->name('subcategory.update');
 //Route::post('/subcategory', [SubCategoryController::class, 'display']);
@@ -55,7 +56,7 @@ Route::match(['get', 'put'], '/subcategory/{id}', [SubCategoryController::class,
 Route::get('/category', [CategoryController::class, 'create'])->name('category.create');
 Route::get('/dashboard', CategoryController::class .'@store')->name('category.store');
 Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
-Route::get('/category', [CategoryController::class, 'display'])->name('category.display');
+Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
 Route::delete('/category/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
 Route::match(['get', 'put'], '/category/{id}', [CategoryController::class,'update'])->name('category.update');
 
@@ -63,15 +64,16 @@ Route::match(['get', 'put'], '/category/{id}', [CategoryController::class,'updat
 Route::post('/assets', [AssetsController::class, 'create'])->name('assets.create');
 Route::get('/dashboard', AssetsController::class .'@store')->name('assets.store');
 Route::post('/assets', [AssetsController::class, 'store'])->name('assets.store');
-Route::get('/assets',[AssetsController::class,'index']);
-Route::get('/assets', [AssetsController::class, 'display'])->name('assets.display');
+Route::get('assets',[AssetsController::class,'index'])->name('assets.index');
+// Route::get('/assets', [AssetsController::class, 'display'])->name('assets.display');
+// Route::get('/assets',[AssetsController::class,'retrive']);
 Route::delete('/assets/{id}',[CategoryController::class,'destroy'])->name('assets.destroy');
 Route::match(['get', 'put'], '/aseets/{id}', [CategoryController::class,'update'])->name('assets.update');
 
 Route::get('/', function () {
     return view('welcome');
 });
-//Route::get('/dashboard',)
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

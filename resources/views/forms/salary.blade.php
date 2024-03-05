@@ -14,15 +14,17 @@
 <body style="background: #ddd;">
     <div class="container-fluid">
         <div class="row content">
-          <div class="col-sm-3 sidenav hidden-xs">
-    @include('components.sidebar')
-    <div class="col-sm-9">
-    <div class="well">
-        <h4>TS3 Enterprises Accounts Dashboard</h4>
-      </div>
-      
-    <div id="app">
-        {{-- <nav class="navbar navbar-default navbar-static-top">
+            @include('components.sidebar')
+            <div class="well">
+                <h4>Salary</h4>
+            </div>
+            <div id="app" style="width: 100%">
+                <div class="container" style="width: 100%">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8" style="width: 100%">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                    {{-- <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -41,13 +43,9 @@
                 </div>
             </div>
         </nav> --}}
-        <div class="container">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                    
 
-                        {{-- <form action="{{ route('salary.index') }}" method="get">
+                                    {{-- <form action="{{ route('salary.index') }}" method="get">
                             <div class="row">
                                 <div class="col-md-5 form-group">
                                     <label for="">Date From</label>
@@ -66,211 +64,223 @@
                             </div>
                         </form> --}}
 
-                        <strong>Expense Information</strong>
-                        @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+                                    <strong>Salary details</strong>
+                                    @if (session('success'))
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
 
-                        @if (session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-                        <a class="btn btn-primary btn-xs pull-right py-0" data-toggle="modal"
-                            data-target="#myModal">Create Salary</a>
-                        <table class="table table-responsive table-bordered table-stripped" style="margin-top:10px;">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Employee ID</th>
-                                    <th>Name</th>
-                                    <th>Salary Month</th>
-                                    <th># of Working Days</th>
-                                    <th>Salary Per Day</th>
-                                    <th>Deduction</th>
-                                    <th>Net Salary</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($salary as $item)
-                                    <tr>
-                                        <td>{{ $item->id }}</td>
-                                        <td>{{ $item->empolyee_id }}</td>
-                                        <td>{{ $item->employee_name }}</td>
-                                        <td>{{ $item->month_name }}</td>
-                                        <td>{{ $item->no_of_workin_days }}</td>
-                                        <td>{{ $item->salary_per_day }}</td>
-                                        <td>{{ $item->deduction }}</td>
-                                        <td>{{ $item->netsalary }}</td>
-                                        <td style="display: flex; flex-wrap: wrap; justify-content: space-around; ">
-                                            {{-- <a href="{{ route('employee.show',$employee->id) }}" class="btn btn-primary btn-xs py-0" style="margin:2px;">Show</a>
+                                    @if (session('error'))
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    @endif
+                                    <a class="btn btn-primary btn-xs pull-right py-0" data-toggle="modal"
+                                        data-target="#myModal">Create Salary</a>
+                                    <table class="table table-responsive table-bordered table-stripped"
+                                        style="margin-top:10px;">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Employee ID</th>
+                                                <th>Name</th>
+                                                <th>Salary Month</th>
+                                                <th># of Working Days</th>
+                                                <th>Salary Per Day</th>
+                                                <th>Deduction</th>
+                                                <th>Net Salary</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($salary as $item)
+                                                <tr>
+                                                    <td>{{ $item->id }}</td>
+                                                    <td>{{ $item->empolyee_id }}</td>
+                                                    <td>{{ $item->employee_name }}</td>
+                                                    <td>{{ $item->month_name }}</td>
+                                                    <td>{{ $item->no_of_workin_days }}</td>
+                                                    <td>{{ $item->salary_per_day }}</td>
+                                                    <td>{{ $item->deduction }}</td>
+                                                    <td>{{ $item->netsalary }}</td>
+                                                    <td
+                                                        style="display: flex; flex-wrap: wrap; justify-content: space-around; ">
+                                                        {{-- <a href="{{ route('employee.show',$employee->id) }}" class="btn btn-primary btn-xs py-0" style="margin:2px;">Show</a>
                             <a href="{{ route('employee.edit',$employee->id) }}" class="btn btn-warning btn-xs py-0" style="margin:2px;">Edit</a> --}}
-                                            <form action="{{ route('salary.update', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="submit" class="btn btn-warning edit-salary-btn"
-                                                    data-id="{{ $item->id }}"
-                                                    data-empolyee_id="{{ $item->empolyee_id }}"
-                                                    data-employee_name="{{ $item->employee_name }}"
-                                                    data-salary_date="{{ $item->salary_date }}"
-                                                    data-no_of_workin_days="{{ $item->no_of_workin_days }}"
-                                                    data-salary_per_day="{{ $item->salary_per_day }}"
-                                                    data-deduction="{{ $item->deduction }}"
-                                                    data-netsalary="{{ $item->netsalary }}">
-                                                    Edit
-                                                </button>
-                                            </form>
+                                                        <form action="{{ route('salary.update', $item->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit"
+                                                                class="btn btn-warning edit-salary-btn"
+                                                                data-id="{{ $item->id }}"
+                                                                data-empolyee_id="{{ $item->empolyee_id }}"
+                                                                data-employee_name="{{ $item->employee_name }}"
+                                                                data-salary_date="{{ $item->salary_date }}"
+                                                                data-no_of_workin_days="{{ $item->no_of_workin_days }}"
+                                                                data-salary_per_day="{{ $item->salary_per_day }}"
+                                                                data-deduction="{{ $item->deduction }}"
+                                                                data-netsalary="{{ $item->netsalary }}">
+                                                                Edit
+                                                            </button>
+                                                        </form>
 
 
-                                            <form action="{{ route('salary.destroy', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{-- {{ $salary->links() }} --}}
+                                                        <form action="{{ route('salary.destroy', $item->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="btn btn-danger">Delete</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    {{-- {{ $salary->links() }} --}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+
+
+
+                        <!-- Create Modal -->
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content" style="padding: 20px;">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Add Expenses</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-horizontal" id="expenseForm" method="POST"
+                                            action="{{ route('salary.store') }}">
+
+                                            {{ csrf_field() }}
+                                            <div class="form-group">
+                                                <label for="Name">Date: </label>
+                                                <input type="text" class="form-control" id="salary_date"
+                                                    placeholder="Date" name="salary_date" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Name">Employee ID: </label>
+                                                <input type="text" class="form-control" id="empolyee_id"
+                                                    placeholder="Employee ID" name="empolyee_id" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Name">Employee Name: </label>
+                                                <input type="text" class="form-control" id="employee_name"
+                                                    placeholder="Employee Name" name="employee_name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Name">No of Working Days: </label>
+                                                <input type="text" class="form-control" id="no_of_workin_days"
+                                                    placeholder="Work days" name="no_of_workin_days" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Name">salary per day: </label>
+                                                <input type="text" class="form-control" id="salary_per_day"
+                                                    placeholder="Salary per day" name="salary_per_day" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Name">deduction: </label>
+                                                <input type="text" class="form-control" id="deduction"
+                                                    placeholder="Deduction" name="deduction" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Name">Net Salary: </label>
+                                                <input type="text" class="form-control" id="netsalary"
+                                                    placeholder="Net Salary" name="netsalary" required>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="reset" class="btn btn-primary"
+                                                onclick="resetForm()">Reset</button>
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Close</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <!-- Edit Modal -->
+                        <div class="modal fade" id="editModal" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content" style="padding: 20px;">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Edit Salary</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="editSalaryForm" action="" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" id="edit_salary_id" name="id">
+                                            <!-- Hidden field for expense ID -->
+                                            <div class="form-group">
+                                                <label for="edit_Salary_date">Salary Date: </label>
+                                                <input type="text" class="form-control" id="edit_salary_date"
+                                                    placeholder="Date" name="salary_date" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="edit_employee_id">Employee ID: </label>
+                                                <input type="text" class="form-control" id="edit_empolyee_id"
+                                                    placeholder="Employee ID" name="empolyee_id" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="edit_Name">Employee Name: </label>
+                                                <input type="text" class="form-control" id="edit_employee_name"
+                                                    placeholder="Employee Name" name="employee_name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="edit_work_day">No of Working Days: </label>
+                                                <input type="text" class="form-control"
+                                                    id="edit_no_of_workin_days" placeholder="Work days"
+                                                    name="no_of_workin_days" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Name">salary per day: </label>
+                                                <input type="text" class="form-control" id="edit_salary_per_day"
+                                                    placeholder="Salary per day" name="salary_per_day" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Name">deduction: </label>
+                                                <input type="text" class="form-control" id="edit_deduction"
+                                                    placeholder="Deduction" name="deduction" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Name">Net Salary: </label>
+                                                <input type="text" class="form-control" id="edit_netsalary"
+                                                    placeholder="Net Salary" name="netsalary" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Close</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-2"></div>
-
-
-
-            <!-- Create Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content" style="padding: 20px;">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Add Expenses</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" id="expenseForm" method="POST"
-                                action="{{ route('salary.store') }}">
-
-                                {{ csrf_field() }}
-                                <div class="form-group">
-                                    <label for="Name">Date: </label>
-                                    <input type="text" class="form-control" id="salary_date" placeholder="Date"
-                                        name="salary_date" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">Employee ID: </label>
-                                    <input type="text" class="form-control" id="empolyee_id"
-                                        placeholder="Employee ID" name="empolyee_id" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">Employee Name: </label>
-                                    <input type="text" class="form-control" id="employee_name"
-                                        placeholder="Employee Name" name="employee_name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">No of Working Days: </label>
-                                    <input type="text" class="form-control" id="no_of_workin_days"
-                                        placeholder="Work days" name="no_of_workin_days" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">salary per day: </label>
-                                    <input type="text" class="form-control" id="salary_per_day"
-                                        placeholder="Salary per day" name="salary_per_day" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">deduction: </label>
-                                    <input type="text" class="form-control" id="deduction"
-                                        placeholder="Deduction" name="deduction" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">Net Salary: </label>
-                                    <input type="text" class="form-control" id="netsalary"
-                                        placeholder="Net Salary" name="netsalary" required>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <button type="reset" class="btn btn-primary" onclick="resetForm()">Reset</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal -->
-            <!-- Edit Modal -->
-            <div class="modal fade" id="editModal" role="dialog">
-                <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content" style="padding: 20px;">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Edit Salary</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="editSalaryForm" action="" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" id="edit_salary_id" name="id">
-                                <!-- Hidden field for expense ID -->
-                                <div class="form-group">
-                                    <label for="edit_Salary_date">Salary Date: </label>
-                                    <input type="text" class="form-control" id="edit_salary_date"
-                                        placeholder="Date" name="salary_date" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="edit_employee_id">Employee ID: </label>
-                                    <input type="text" class="form-control" id="edit_empolyee_id"
-                                        placeholder="Employee ID" name="empolyee_id" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="edit_Name">Employee Name: </label>
-                                    <input type="text" class="form-control" id="edit_employee_name"
-                                        placeholder="Employee Name" name="employee_name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="edit_work_day">No of Working Days: </label>
-                                    <input type="text" class="form-control" id="edit_no_of_workin_days"
-                                        placeholder="Work days" name="no_of_workin_days" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">salary per day: </label>
-                                    <input type="text" class="form-control" id="edit_salary_per_day"
-                                        placeholder="Salary per day" name="salary_per_day" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">deduction: </label>
-                                    <input type="text" class="form-control" id="edit_deduction"
-                                        placeholder="Deduction" name="deduction" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">Net Salary: </label>
-                                    <input type="text" class="form-control" id="edit_netsalary"
-                                        placeholder="Net Salary" name="netsalary" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
+    </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
