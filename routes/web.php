@@ -28,7 +28,11 @@ Route::delete('/income/{id}',[IncomeController::class,'destroy'])->name('income.
 Route::match(['get', 'put'], '/income/{id}', [IncomeController::class,'update'])->name('income.update');
 
 Route::get('/incomeRe', [IncomeController::class,'getIncome'])->name('get-Income');
+// Define a route to fetch income data and apply filters
+Route::get('/incomeRe/data', 'IncomeController@getIncome')->name('income.data');
 
+// You may also need a route for filtering expenses by month if not already defined
+ Route::get('/incomeRe/filterByMonth', 'IncomeController@filterByMonth')->name('income.filterByMonth');
 Route::post('/expence', [ExpencesController::class, 'store'])->name('expence.store');
 Route::get('expence', [ExpencesController::class,'index'])->name('expence.index');
 Route::post('/expence',  [ExpencesController::class,'store'])->name('expence.store');
