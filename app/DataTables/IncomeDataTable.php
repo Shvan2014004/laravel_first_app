@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Button;
+use Carbon\Carbon;
 
 
 
@@ -56,8 +57,28 @@ data-target="#deleteincomeModal"
      */
     public function query(Income $model)
     {
-        return $model->newQuery()->select('*');
+       
+        $query = $model->newQuery()->select('*');
+
+        // Filter by date range
+        if(request()->has('date_from') && request()->has('date_to')) {
+            $date_from = Carbon::parse(request()->input('date_from'))->startOfDay();
+            $date_to = Carbon::parse(request()->input('date_to'))->endOfDay();
+            $query->whereBetween('date', [$date_from, $date_to]);
+        }
+
+        // Filter by month
+        if(request()->has('month')) {
+            $month = request()->input('month');
+            $query->whereMonth('date', '=', $month);
+        }
+        
+        
+
+        return $query;
     }
+
+    
 
     /**
      * Optional method if you want to use html builder.
