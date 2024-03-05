@@ -49,7 +49,7 @@ Route::match(['get', 'put'], '/salary/{id}', [SalaryController::class,'update'])
 Route::get('/subcategory', [SubCategoryController::class, 'create'])->name('subcategory.create');
 Route::get('/dashboard', SubCategoryController::class .'@store')->name('subcategory.store');
 Route::post('/subcategory', [SubCategoryController::class,'store'])->name('subcategory.store');
-Route::get('/subcategory', [SubCategoryController::class, 'index'])->name('subcategory.index');
+Route::get('/subcategory', [SubCategoryController::class, 'display'])->name('subcategory.display');
 Route::delete('/subcategory/{id}',[SubCategoryController::class,'destroy'])->name('subcategory.destroy');
 Route::match(['get', 'put'], '/subcategory/{id}', [SubCategoryController::class,'update'])->name('subcategory.update');
 //Route::post('/subcategory', [SubCategoryController::class, 'display']);
@@ -57,15 +57,16 @@ Route::match(['get', 'put'], '/subcategory/{id}', [SubCategoryController::class,
 Route::get('/category', [CategoryController::class, 'create'])->name('category.create');
 Route::get('/dashboard', CategoryController::class .'@store')->name('category.store');
 Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
-Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+Route::get('/category', [CategoryController::class, 'display'])->name('category.display');
 Route::delete('/category/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
 Route::match(['get', 'put'], '/category/{id}', [CategoryController::class,'update'])->name('category.update');
 
 
+// Route::post('/assets', [AssetsController::class, 'create'])->name('assets.create');
 Route::post('/assets', [AssetsController::class, 'create'])->name('assets.create');
 Route::get('/dashboard', AssetsController::class .'@store')->name('assets.store');
 Route::post('/assets', [AssetsController::class, 'store'])->name('assets.store');
-Route::get('assets',[AssetsController::class,'index'])->name('assets.index');
+Route::get('assets',[AssetsController::class,'display'])->name('assets.display');
 // Route::get('/assets', [AssetsController::class, 'display'])->name('assets.display');
 // Route::get('/assets',[AssetsController::class,'retrive']);
 Route::delete('/assets/{id}',[CategoryController::class,'destroy'])->name('assets.destroy');

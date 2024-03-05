@@ -15,7 +15,7 @@
 
     <div class="container-fluid">
         <div class="row content">
-            @include('components.sidebar')
+            {{-- @include('components.sidebar') --}}
             <div class="well">
                 <h4>Salary</h4>
             </div>
@@ -26,7 +26,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
 
-                                {{-- <form action="{{ route('subcategory.index') }}" method="get">
+                                {{-- <form action="{{ route('assets.index') }}" method="get">
                             <div class="row">
                                 <div class="col-md-5 form-group">
                                     <label for="">Date From</label>
@@ -45,7 +45,7 @@
                             </div>
                         </form> --}}
 
-                                <strong>Sub Assets Information</strong>
+                                <strong>Assets Information</strong>
                                 @if (session('success'))
                                     <div class="alert alert-success">
                                         {{ session('success') }}
@@ -58,7 +58,7 @@
                                     </div>
                                 @endif
                                 <a class="btn btn-primary btn-xs pull-right py-0" data-toggle="modal"
-                                    data-target="#myModal">Create subcategory</a>
+                                    data-target="#myModal">Create assets</a>
                                 <table class="table table-responsive table-bordered table-stripped"
                                     style="margin-top:10px;">
                                     <thead>
@@ -79,19 +79,18 @@
                                                     style="display: flex; flex-wrap: wrap; justify-content: space-around; ">
                                                     {{-- <a href="{{ route('employee.show',$employee->id) }}" class="btn btn-primary btn-xs py-0" style="margin:2px;">Show</a>
                             <a href="{{ route('employee.edit',$employee->id) }}" class="btn btn-warning btn-xs py-0" style="margin:2px;">Edit</a> --}}
-                                                    <form action="{{ route('subcategory.update', $item->id) }}"
+                                                    <form action="{{ route('assets.update', $item->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('PUT')
-                                                        <button type="submit"
-                                                            class="btn btn-warning edit-assets-btn"
+                                                        <button type="submit" class="btn btn-warning edit-assets-btn"
                                                             data-id="{{ $item->id }}"
                                                             data-sub_category="{{ $item->description }}"
                                                             data-category_id="{{ $item->amount }}">
                                                             Edit
                                                         </button>
                                                     </form>
-                                                    <form action="{{ route('subcategory.destroy', $item->id) }}"
+                                                    <form action="{{ route('assets.destroy', $item->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -102,7 +101,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{-- {{ $subcategory->links() }} --}}
+                                {{-- {{ $assets->links() }} --}}
                             </div>
                         </div>
                     </div>
@@ -121,8 +120,7 @@
                                     <h4 class="modal-title">Add Assets</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form class="form-horizontal" id="assetsForm" method="POST"
-                                        action="{{ route('assets.store') }}">
+                                    <form class="form-horizontal" id="assetsForm" method="POST" action="{{route('assets.store')}}">
 
                                         {{ csrf_field() }}
                                         <div class="form-group">
@@ -138,20 +136,22 @@
                                         @csrf
                                         <div class="form-group">
                                             <label for="Name">Sub Category </label>
-                                            <input type="text" class="form-control" id="sub_category_id" placeholder="Sub Category" name="sub_category_id" required>
+                                            {{-- <input type="text" class="form-control" id="sub_category_id" placeholder="Sub Category" name="sub_category_id" required> --}}
 
-                                            {{-- <select name="sub_category_id" class="form-control">
-                                                <option value="">Select a subcategory</option>
-                                                @foreach ($sub_cat as $row)
+                                            <select name="sub_category_id" class="form-control">
+                                                <option value="">Select a assets</option>
+                                                @foreach ($category as $row)
                                                     <option value="{{ $row->id }}">
                                                         {{ $row->sub_category }}</option>
                                                 @endforeach
-                                            </select> --}}
+                                            </select>
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="reset" class="btn btn-primary"onclick="resetForm()">Reset</button>
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        <button type="reset"
+                                            class="btn btn-primary"onclick="resetForm()">Reset</button>
+                                        <button type="button" class="btn btn-primary"
+                                            data-dismiss="modal">Close</button>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -169,13 +169,13 @@
                             <div class="modal-content" style="padding: 20px;">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Edit subcategory</h4>
+                                    <h4 class="modal-title">Edit assets</h4>
                                 </div>
                                 <div class="modal-body">
                                     <form id="editassetsForm" action="" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <input type="hidden" id="edit_subcategory_id" name="id">
+                                        <input type="hidden" id="edit_assets_id" name="id">
                                         <!-- Hidden field for expense ID -->
                                         <div class="form-group">
                                             <label for="Name">Description </label>
@@ -187,89 +187,86 @@
                                             <input type="text" class="form-control" id="edit_amount"
                                                 placeholder="Amount" name="amount" required>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label for="Name">Sub Category </label>
-                                            <input type="text" class="form-control" id="sub_category_id" placeholder="Sub Category" name="sub_category_id" required>
+                                            {{-- <input type="text" class="form-control" id="sub_category_id" placeholder="Sub Category" name="sub_category_id" required> --}}
 
-                                            {{-- <select class="form-control" name="sub_category_id"
+                                            <select class="form-control" name="sub_category_id"
                                                 id="edit_sub_category_id">
-                                                <option value="">Select a subcategory</option>
-                                                @foreach ($sub_cat as $row)
+                                                <option value="">Select a assets</option>
+                                                @foreach ($category as $row)
                                                     <option value="{{ $row->id }}">
                                                         {{ $row->sub_category }}</option>
                                                 @endforeach
-                                            </select> --}}
+                                            </select>
                                         </div>
                                         <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
 
-                                        <button type="button" class="btn btn-primary"
-                                            data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Close</button>
                                     </form>
-                                </div>
-                                
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
+
             </div>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-            <script>
-                function resetForm() {
-                    document.getElementById("expenseForm").reset();
-                }
-                $(document).ready(function() {
-                    // Add event listener to all edit buttons
-                    $('.edit-assets-btn').click(function() {
-                        // Extract expense data from the corresponding row
-                        var id = $(this).data('id');
-                        var sub = $(this).data('description');
-                        var category = $(this).data('Amount');
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script>
+            function resetForm() {
+                document.getElementById("expenseForm").reset();
+            }
+            $(document).ready(function() {
+                // Add event listener to all edit buttons
+                $('.edit-assets-btn').click(function() {
+                    // Extract expense data from the corresponding row
+                    var id = $(this).data('id');
+                    var sub = $(this).data('description');
+                    var category = $(this).data('Amount');
 
 
-                        // Populate the modal form fields with the extracted expense data
-                        $('#edit_assets_id').val(id);
-                        $('#edit_description').val(sub);
-                        $('#edit_amount').val(name);
+                    // Populate the modal form fields with the extracted expense data
+                    $('#edit_assets_id').val(id);
+                    $('#edit_description').val(sub);
+                    $('#edit_amount').val(name);
 
-                        // Set the form action URL dynamically
-                        $('#editassetsForm').attr('action', "{{ route('subcategory.update', '') }}/" + id);
+                    // Set the form action URL dynamically
+                    $('#editassetsForm').attr('action', "{{ route('assets.update', '') }}/" + id);
 
 
-                        // Show the modal
-                        $('#editModal').modal('show');
-                        return false;
-                    });
-
-                    // Handle form submission when the editassetsForm is submitted
-                    $('#editassetsForm').submit(function(event) {
-                        event.preventDefault();
-
-                        var formData = $(this).serialize();
-
-                        $.ajax({
-                            url: $(this).attr('action'),
-                            type: 'POST', // Tunnel the PUT request through a POST request
-                            data: formData,
-                            success: function(response) {
-                                window.location.href = '/subcategory';
-                                $('#editModal').modal('hide');
-                            },
-                            error: function(xhr, status, error) {
-                                console.error(xhr.responseText);
-                                alert('Failed to update subcategory. Please try again.');
-                            }
-                        });
-                    });
-
+                    // Show the modal
+                    $('#editModal').modal('show');
+                    return false;
                 });
-            </script>
+
+                // Handle form submission when the editassetsForm is submitted
+                $('#editassetsForm').submit(function(event) {
+                    event.preventDefault();
+
+                    var formData = $(this).serialize();
+
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: 'POST', // Tunnel the PUT request through a POST request
+                        data: formData,
+                        success: function(response) {
+                            window.location.href = '/assets';
+                            $('#editModal').modal('hide');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                            alert('Failed to update assets. Please try again.');
+                        }
+                    });
+                });
+
+            });
+        </script>
 
 
 </body>

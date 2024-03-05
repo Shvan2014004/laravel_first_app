@@ -14,29 +14,7 @@ use Illuminate\Support\Facades\Session;
 
 class AssetsController extends Controller
 {
-    public function index(Request $request)
-    {
-        // $category = Category::all();
-        // return view('forms.assets', ['category' => $category]);
-        // $sub_cat=Subcategory::all();
-        // return view('forms.assets',compact('sub_cat'));
-        $sub = Assets::orderBy('id', 'desc')
-            ->when(
-                $request->date_from && $request->date_to,
-
-                function (Builder $builder) use ($request) {
-                    $builder->whereBetween(
-                        DB::raw('DATE(created_at)'),
-                        [
-                            $request->date_from,
-                            $request->date_to
-                        ]
-                    );
-                }
-            )->paginate(5);
-
-        return view('forms.assets', compact('sub', 'request'));
-    }
+    
     /**
      * Display the registration view.
      */
@@ -44,20 +22,25 @@ class AssetsController extends Controller
     {
         return view('forms.assets');
     }
-  
+
     /**
      * Handle an incoming registration request.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store( Request $request ) {
-        $this->validate( $request, [
+    public function store(Request $request)
+    {
+        $this->validate($request, [
             'description' => 'required',
             'amount' => 'required',
             'sub_category' => 'required',
-            
-        ] );
 
+        ]);
+
+        //  Assets::create($request->all());
+        //  Session::flash('success', 'Data has been successfully stored.');
+        // return redirect('/subcategory')->with( 'success', 'Success' );
+        
         $expence = Assets::create( $request->all() );
 
         if ( $expence ) {
@@ -65,14 +48,15 @@ class AssetsController extends Controller
         } else {
             return back()->withInput()->with( 'error', 'Failed to save data' );
         }
-
     }
 
-    // public function display()
-    // {
-    //     $data = Assets::all();
-    //     return (view('forms.assets', compact('data')));
-    // }
+    public function display()
+    {
+        $category = SubCategory::all();
+        // return view('forms.subcategory', ['category' => $category]);   
+        $sub = Assets::all();
+        return (view('forms.assets', compact('sub','category')));
+    }
 
     public function update(Request $request, $id)
     {

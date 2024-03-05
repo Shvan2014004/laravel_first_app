@@ -14,7 +14,7 @@
 <body style="background: #ddd;">
     <div class="container-fluid">
         <div class="row content">
-            @include('components.sidebar')
+            {{-- @include('components.sidebar') --}}
             <div class="well">
                 <h4>Salary</h4>
             </div>
@@ -132,7 +132,7 @@
                                             {{-- <input type="text" class="form-control" id="category_id" placeholder="Category" name="category_id" required>  --}}
                                             <select name="category_id" class="form-control">
                                                 <option value="">Select a category</option>
-                                                @foreach ($sub as $row)
+                                                @foreach ($category as $row)
                                                     <option value="{{ $row->id }}"->{{ $row->category }}</option>
                                                 @endforeach
                                             </select>
@@ -178,7 +178,7 @@
                                             {{-- <input type="text" class="form-control" id="category_id" placeholder="Category" name="category_id" required>  --}}
                                             <select name="edit_category_id" class="form-control">
                                                 <option value="">Select a Category</option>
-                                                @foreach ($sub as $row)
+                                                @foreach ($category as $row)
                                                     <option value="{{ $row->id }}"->{{ $row->category }}
                                                     </option>
                                                 @endforeach

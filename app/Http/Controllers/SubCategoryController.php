@@ -33,15 +33,16 @@ class SubCategoryController extends Controller
                 }
             )->paginate(5);
 
-        return view('forms.subcategory', compact('salary', 'request'));
+        return view('forms.subcategory', compact('sub', 'request'));
     }
     /**
      * Display the registration view.
      */
     public function create(): View
-    {
-        return view('forms.subcategory');
-    }
+{
+    return view('forms.assets');
+}
+
   
     /**
      * Handle an incoming registration request.
@@ -51,15 +52,25 @@ class SubCategoryController extends Controller
     public function store(Request $request)
     {
 
-        Subcategory::create($request->all());
-        return redirect()->route('subcategory.create');
-        Session::flash('success', 'Data has been successfully stored.');
+        // Subcategory::create($request->all());
+        // Session::flash('success', 'Data has been successfully stored.');
+        // return redirect('/subcategory')->with( 'success', 'Success' );
+        $expence = SubCategory::create( $request->all() );
+
+        if ( $expence ) {
+            return redirect( '/subcategory' )->with( 'success', 'Success' );
+        } else {
+            return back()->withInput()->with( 'error', 'Failed to save data' );
+        }        
+
     }
 
     public function display()
     {
+        $category = Category::all();
+        // return view('forms.subcategory', ['category' => $category]);   
         $sub = Subcategory::all();
-        return (view('forms.subcategory', compact('sub')));
+        return (view('forms.subcategory', compact('sub','category')));
     }
 
     public function update(Request $request, $id)
