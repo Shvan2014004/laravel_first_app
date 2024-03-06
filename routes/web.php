@@ -28,7 +28,8 @@ Route::post('/income',  [IncomeController::class,'store'])->name('income.store')
 Route::delete('/income/{id}',[IncomeController::class,'destroy'])->name('income.destroy');
 Route::match(['get', 'put'], '/income/{id}', [IncomeController::class,'update'])->name('income.update');
 
-Route::get('/incomeRe', [IncomeController::class,'getIncome'])->name('get-Income');
+Route::get('/incomeRe', [IncomeController::class, 'getIncome'])->name('get-Income');
+// Route::get('/incomeRe', [IncomeController::class,'getIncome'])->name('get-Income1');
 // Define a route to fetch income data and apply filters
 Route::get('/incomeRe/data', 'IncomeController@getIncome')->name('income.data');
 

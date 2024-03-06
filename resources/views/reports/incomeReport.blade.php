@@ -79,6 +79,7 @@
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    
                 }
             });
 
@@ -86,17 +87,17 @@
             $('#date-range-filter-btn').on('click', function() {
                 var date_from = $('#date_from').val();
                 var date_to = $('#date_to').val();
-                table.DataTable().ajax.url(ajaxUrl + '?date_from=' + date_from + '&date_to=' + date_to)
-                    .load();
+                table.DataTable().ajax.url(ajaxUrl + '?date_from=' + date_from + '&date_to=' + date_to).load();
             });
 
             // Event listener for monthly filter button
             $('#month-filter-btn').on('click', function() {
                 var month = $('#month').val();
 
-                table.DataTable().ajax.url(ajaxUrl + '?month=' + month).load();
+                 table.DataTable().ajax.url(ajaxUrl + '?month=' + month).load();
 
             });
+            
             var table = $('#income-table');
             var title = "Monthly Income Report";
             var columns = [0, 1, 2, 3, 4, 5];

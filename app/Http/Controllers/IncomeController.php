@@ -13,19 +13,20 @@ class IncomeController extends Controller {
   
 
      
-     public function getIncome(Request $request, IncomeDataTable $dataTable)
-     {
-         $month = $request->input('month');
-         $query = Income::query();
-       
-         if ($month) {
-             $query->whereMonth('date', $month);
-         }
-     
-         return $dataTable->with([
-             'filteredData' => $query->get()
-         ])->render('reports.incomeReport');
-     }
+    public function getIncome(Request $request, IncomeDataTable $dataTable)
+    {
+        $month = $request->input('month');
+        $query = Income::query();
+    
+        if ($month) {
+            $query->whereMonth('date', $month);
+        }
+    
+        return $dataTable->with([
+            'filteredData' => $query->get()
+        ])->render('reports.incomeReport');
+    }
+    
     public function store( Request $request ) {
         $this->validate( $request, [
             'date' => 'required',
