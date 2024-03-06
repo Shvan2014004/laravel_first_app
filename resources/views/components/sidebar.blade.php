@@ -28,10 +28,10 @@
       <img src="{{asset('images/logo.jpeg')}}" alt="logo" height="100" width="100">
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="{{route('dashboard')}}">Dashboard</a></li>
-        <li><a href="{{route('income.index')}}">Income</a></li>
-        <li><a href="{{route('expence.index')}}">Expenses</a></li>
+        <li><a href="{{route('income.store')}}">Income</a></li>
+        <li><a href="{{route('expence.store')}}">Expenses</a></li>
         <li><a href="{{route('salary.index')}}">Salary</a></li>
-        {{-- <li><a href="{{route('assets.index')}}">Assets</a></li> --}}
+         <li><a href="{{route('assets.index')}}">Assets</a></li> 
         <li><a href="{{route('expence.filterByMonth')}}">Reports</a></li>
       </ul><br>
     </div>

@@ -1,4 +1,3 @@
-{{-- @extends('layouts.app') --}}
 <!DOCTYPE html>
 <html>
 
@@ -26,24 +25,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
 
-                                {{-- <form action="{{ route('assets.index') }}" method="get">
-                            <div class="row">
-                                <div class="col-md-5 form-group">
-                                    <label for="">Date From</label>
-                                    <input type="date" name="date_from" class="form-control"
-                                        value="{{ $request->date_from }}">
-                                </div>
-                                <div class="col-md-5 form-group">
-                                    <label for="">Date From</label>
-                                    <input type="date" name="date_to" class="form-control"
-                                        value="{{ $request->date_to }}">
-                                </div>
-                                <div class="col-md-2 form-group" style="margin-top:25px;">
-                                    <input type="submit" class="btn btn-primary btn-md"
-                                        style="background-color: #337ab7" value="Search">
-                                </div>
-                            </div>
-                        </form> --}}
+
 
                                 <strong>Assets Information</strong>
                                 @if (session('success'))
@@ -85,8 +67,9 @@
                                                         @method('PUT')
                                                         <button type="submit" class="btn btn-warning edit-assets-btn"
                                                             data-id="{{ $item->id }}"
-                                                            data-sub_category="{{ $item->description }}"
-                                                            data-category_id="{{ $item->amount }}">
+                                                            data-description="{{ $item->description }}"
+                                                            data-amount="{{ $item->amount }}"
+                                                            data-sub_category_id="{{ $item->sub_category_id }}">
                                                             Edit
                                                         </button>
                                                     </form>
@@ -101,7 +84,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{-- {{ $assets->links() }} --}}
+
                             </div>
                         </div>
                     </div>
@@ -120,7 +103,9 @@
                                     <h4 class="modal-title">Add Assets</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form class="form-horizontal" id="assetsForm" method="POST" action="{{route('assets.store')}}">
+                                    <form class="form-horizontal" id="assetsForm" method="POST"
+                                        action="{{ route('assets.store') }}">
+                                        @csrf
 
                                         {{ csrf_field() }}
                                         <div class="form-group">
@@ -200,13 +185,15 @@
                                                         {{ $row->sub_category }}</option>
                                                 @endforeach
                                             </select>
-                                        </div>
-                                        <div class="modal-footer">
                                             <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </form>
+                                        <div class="modal-footer">
+                                           
 
                                             <button type="button" class="btn btn-primary"
                                                 data-dismiss="modal">Close</button>
-                                    </form>
+                                 
                                 </div>
                             </div>
                         </div>
@@ -222,50 +209,52 @@
                 document.getElementById("expenseForm").reset();
             }
             $(document).ready(function() {
-                // Add event listener to all edit buttons
-                $('.edit-assets-btn').click(function() {
-                    // Extract expense data from the corresponding row
-                    var id = $(this).data('id');
-                    var sub = $(this).data('description');
-                    var category = $(this).data('Amount');
+                        // Add event listener to all edit buttons
+                        $('.edit-assets-btn').click(function() {
+                                // Extract expense data from the corresponding row
+                                var id = $(this).data('id');
+                                var description = $(this).data('description');
+                                var amount = $(this).data('amount');
+                                var sub_category_id = $(this).data('sub_category_id');
 
 
-                    // Populate the modal form fields with the extracted expense data
-                    $('#edit_assets_id').val(id);
-                    $('#edit_description').val(sub);
-                    $('#edit_amount').val(name);
+                                // Populate the modal form fields with the extracted expense data
+                                $('#edit_assets_id').val(id);
+                                $('#edit_description').val(description);
+                                $('#edit_amount').val(amount);
+                                $('#edit_sub_category_id').val(sub_category_id);
 
-                    // Set the form action URL dynamically
-                    $('#editassetsForm').attr('action', "{{ route('assets.update', '') }}/" + id);
+                                    // Set the form action URL dynamically
+                                    $('#editassetsForm').attr('action', "{{ route('assets.update', '') }}/" + id);
 
 
-                    // Show the modal
-                    $('#editModal').modal('show');
-                    return false;
-                });
+                                    // Show the modal
+                                    $('#editModal').modal('show');
+                                    return false;
+                                });
 
-                // Handle form submission when the editassetsForm is submitted
-                $('#editassetsForm').submit(function(event) {
-                    event.preventDefault();
+                            // Handle form submission when the editassetsForm is submitted
+                            $('#editassetsForm').submit(function(event) {
+                                event.preventDefault();
 
-                    var formData = $(this).serialize();
+                                var formData = $(this).serialize();
 
-                    $.ajax({
-                        url: $(this).attr('action'),
-                        type: 'POST', // Tunnel the PUT request through a POST request
-                        data: formData,
-                        success: function(response) {
-                            window.location.href = '/assets';
-                            $('#editModal').modal('hide');
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(xhr.responseText);
-                            alert('Failed to update assets. Please try again.');
-                        }
-                    });
-                });
+                                $.ajax({
+                                    url: $(this).attr('action'),
+                                    type: 'POST', // Tunnel the PUT request through a POST request
+                                    data: formData,
+                                    success: function(response) {
+                                        window.location.href = '/assets';
+                                        $('#editModal').modal('hide');
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error(xhr.responseText);
+                                        alert('Failed to update assets. Please try again.');
+                                    }
+                                });
+                            });
 
-            });
+                        });
         </script>
 
 
