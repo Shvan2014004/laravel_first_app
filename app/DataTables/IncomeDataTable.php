@@ -72,8 +72,6 @@ data-target="#deleteincomeModal"
             $month = request()->input('month');
             $query->whereMonth('date', '=', $month);
         }
-        
-        
 
         return $query;
     }

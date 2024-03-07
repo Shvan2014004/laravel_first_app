@@ -19,53 +19,64 @@
                 <div class="col-md-8">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <h1>Filter Data by Month</h1>
+                            <h1>Monthly Expense Report</h1>
                             <form method="GET" action="{{ route('expence.filterByMonth') }}">
                                 <label for="month">Select a month:</label>
                                 <select name="month" id="month">
-                                    <option value="1">January</option>
-                                    <option value="2">February</option>
-                                    <option value="3">March</option>
-                                    <option value="4">April</option>
-                                    <option value="5">May</option>
-                                    <option value="6">June</option>
-                                    <option value="7">July</option>
-                                    <option value="8">August</option>
-                                    <option value="9">September</option>
-                                    <option value="10">October</option>
-                                    <option value="11">November</option>
-                                    <option value="12">December</option>
+                                    <option value="1" {{ $month == 1 ? 'selected' : '' }}>January</option>
+                                    <option value="2" {{ $month == 2 ? 'selected' : '' }}>February</option>
+                                    <option value="3" {{ $month == 3 ? 'selected' : '' }}>March</option>
+                                    <option value="4" {{ $month == 4 ? 'selected' : '' }}>April</option>
+                                    <option value="5" {{ $month == 5 ? 'selected' : '' }}>May</option>
+                                    <option value="6" {{ $month == 6 ? 'selected' : '' }}>June</option>
+                                    <option value="7" {{ $month == 7 ? 'selected' : '' }}>July</option>
+                                    <option value="8" {{ $month == 8 ? 'selected' : '' }}>August</option>
+                                    <option value="9" {{ $month == 9 ? 'selected' : '' }}>September</option>
+                                    <option value="10" {{ $month == 10 ? 'selected' : '' }}>October</option>
+                                    <option value="11" {{ $month == 11 ? 'selected' : '' }}>November</option>
+                                    <option value="12" {{ $month == 12 ? 'selected' : '' }}>December</option>
 
                                 </select>
                                 <button type="submit">Filter</button>
                             </form>
+                            <div style="margin-top: 10px;">
+                                <!-- Buttons for exporting data -->
+                                <a href="{{ route('expence.exportCSV', ['month' => $month]) }}"
+                                    class="btn btn-primary">Export to CSV</a>
 
-                            <table class="table table-responsive table-bordered table-stripped"
-                                style="margin-top:10px;">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Date</th>
-                                        <th>Description</th>
-                                        <th>Amount</th>
-                                        <th>Type</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (isset($filteredData) && count($filteredData) > 0)
-                                        @foreach ($filteredData as $item)
-                                            <tr>
-                                                <td>{{ $item->id }}</td>
-                                                <td>{{ $item->date }}</td>
-                                                <td>{{ $item->description }}</td>
-                                                <td>{{ $item->amount }}</td>
-                                                <td>{{ $item->type }}</td>
+                                <a href="{{ route('expence.exportPDF', ['month' => $month]) }}"
+                                    class="btn btn-danger">Export to PDF</a>
+                            </div>
+                            @if (count($filteredData) > 0)
+                                <table class="table table-responsive table-bordered table-stripped"
+                                    style="margin-top:10px;">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Date</th>
+                                            <th>Description</th>
+                                            <th>Amount</th>
+                                            <th>Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (isset($filteredData) && count($filteredData) > 0)
+                                            @foreach ($filteredData as $item)
+                                                <tr>
+                                                    <td>{{ $item->id }}</td>
+                                                    <td>{{ $item->date }}</td>
+                                                    <td>{{ $item->description }}</td>
+                                                    <td>{{ $item->amount }}</td>
+                                                    <td>{{ $item->type }}</td>
 
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                </tbody>
-                            </table>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
+                            @else
+                                <p>No records found.</p>
+                            @endif
                         </div>
                     </div>
                 </div>
