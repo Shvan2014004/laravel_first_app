@@ -6,26 +6,48 @@ use Illuminate\Http\Request;
 use App\Models\Income;
 use Carbon\Carbon;
 use DataTables;
-use App\DataTables\IncomeDataTable;  
+use App\DataTables\IncomeDataTable;
 
+use Illuminate\Support\Facades\Log;
 
 class IncomeController extends Controller {
-  
+    public function index( Request $request ) {
+        $expence = Income::orderBy( 'id', 'desc' )
+        ->when(
+            $request->date_from && $request->date_to,
+            function ( Builder $builder ) use ( $request ) {
+                $builder->whereBetween(
+                    DB::raw( 'DATE(created_at)' ),
+                    [
+                        $request->date_from,
+                        $request->date_to
+                    ]
+                );
+            }
+        )->paginate( 5 );
 
-     
-     public function getIncome(Request $request, IncomeDataTable $dataTable)
-     {
-         $month = $request->input('month');
-         $query = Income::query();
+        return view( 'forms.expence', compact( 'expence', 'request' ) );
+    }
+    public function getIncome( Request $request, IncomeDataTable $dataTable ) {
+        // $month = $request->input( 'month' );
+        // $query = Income::query();
        
-         if ($month) {
-             $query->whereMonth('date', $month);
-         }
-     
-         return $dataTable->with([
-             'filteredData' => $query->get()
-         ])->render('reports.incomeReport');
-     }
+        // if ( $month ) {
+        //     $query->whereMonth( 'date', $month );  
+            
+        // }
+        
+        // return $dataTable->with( [
+        //     'filteredData' => $query->get()
+        // ] )->render( 'reports.incomeReport' );
+        $query = Income::query();
+        $filteredData = $query->get(); // Retrieve all data from the Income model
+        
+        return $dataTable->with([
+            'filteredData' => $filteredData
+        ])->render('reports.incomeReport');
+    }
+
     public function store( Request $request ) {
         $this->validate( $request, [
             'date' => 'required',

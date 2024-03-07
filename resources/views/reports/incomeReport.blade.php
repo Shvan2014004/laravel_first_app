@@ -13,7 +13,7 @@
 
     <div class="container mt-5">
         <h2 class="mb-4">Income Report</h2>
-        <form method="GET">
+        <form>
             <label for="date_range">Select date range:</label>
             <input type="date" name="date_from" id="date_from">
             <input type="date" name="date_to" id="date_to">
@@ -56,8 +56,9 @@
     </div>
 
 
+    {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>  --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+  
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -67,7 +68,7 @@
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.flash.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script> 
 
     <script>
         const ajaxUrl = @json(route('get-Income'));
@@ -77,13 +78,14 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+                 headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                 }
             });
 
             // Event listener for date range filter button
             $('#date-range-filter-btn').on('click', function() {
+
                 var date_from = $('#date_from').val();
                 var date_to = $('#date_to').val();
                 table.DataTable().ajax.url(ajaxUrl + '?date_from=' + date_from + '&date_to=' + date_to)
@@ -93,8 +95,10 @@
             // Event listener for monthly filter button
             $('#month-filter-btn').on('click', function() {
                 var month = $('#month').val();
-
-                table.DataTable().ajax.url(ajaxUrl + '?month=' + month).load();
+                var url = ajaxUrl + '?month=' + month;
+                table.DataTable().ajax.url(url).load(function() {
+                    $('#month').val(month); // Set the selected month after loading
+                });
 
             });
             var table = $('#income-table');
@@ -131,6 +135,7 @@
 
 
             ];
+
             makeDataTable(table, title, columns, dataColumns);
         });
 
@@ -143,28 +148,13 @@
                     "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 processing: true,
                 stateSave: false, // Enable state saving
-
+                cache: true,
                 pageLength: 15,
                 "lengthMenu": [
                     [10, 15, 25, 50, -1],
                     [10, 15, 25, 50, "All"]
                 ],
                 buttons: [
-                    //    {
-                    //        text: "<i></i> Select all",
-                    //        className: "btn btn-primary btn-sm btn-select-all",
-                    //        action: function(e, dt, node, config) {
-                    //            selectAllCheckBoxes();
-                    //        }
-                    //    },
-
-                    //    {
-                    //        text: "<i></i> Deselect all",
-                    //        className: "btn btn-info btn-sm",
-                    //        action: function(e, dt, node, config) {
-                    //            deselectAllCheckBoxes();
-                    //        }
-                    //    },
 
                     $.extend(
                         true, {}, {
@@ -205,22 +195,21 @@
                         }
                     ),
 
-                    //    {
-                    //        text: "<i></i> Delete selected",
-                    //        className: "btn btn-danger btn-sm btn-deselect-all",
-                    //        action: function(e, dt, node, config) {
-                    //            deleteSelectedRows(table);
-                    //        }
-                    //    }
+
                 ],
                 ajax: ajaxUrl,
                 columns: dataColumns,
                 order: [
                     [0, "asc"]
                 ]
+
             });
 
         }
+   
+
+
+
     </script>
 </body>
 

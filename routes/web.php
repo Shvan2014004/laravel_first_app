@@ -30,13 +30,14 @@ Route::get('/incomeRe', [IncomeController::class,'getIncome'])->name('get-Income
 Route::get('/incomeRe/data', 'IncomeController@getIncome')->name('income.data');
 Route::get('/incomeRe/filterByMonth', 'IncomeController@filterByMonth')->name('income.filterByMonth');
 
-
 Route::get('expence', [ExpencesController::class,'index'])->name('expence.index');
 Route::post('/expence',  [ExpencesController::class,'store'])->name('expence.store');
 Route::delete('/expence/{id}',[ExpencesController::class,'destroy'])->name('expence.destroy');
 Route::match(['get', 'put'], '/expence/{id}', [ExpencesController::class,'update'])->name('expence.update');
 Route::get('/filter', [ExpencesController::class, 'filterByMonth'])->name('expence.filterByMonth');
-
+Route::get('/export/csv', [ExpencesController::class,'exportToCSV'])->name('expence.exportCSV');
+Route::get('/export/pdf',  [ExpencesController::class,'exportToPDF'])->name('expence.exportPDF');
+Route::get('/filter-by-date-range', [ExpencesController::class,'filterByDateRange'])->name('expence.filterByDateRange');
 
 Route::get('/salary', [SalaryController::class, 'create'])->name('salary.create');
 Route::get('/dashboard', SalaryController::class .'@store')->name('salary.store');
