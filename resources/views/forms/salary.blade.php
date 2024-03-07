@@ -90,7 +90,7 @@
                                                 <th>Salary Per Day</th>
                                                 <th>Deduction</th>
                                                 <th>Net Salary</th>
-                                                <th>Action</th>
+                                                <th style="width: 150px">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>

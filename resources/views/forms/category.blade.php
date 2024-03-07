@@ -16,7 +16,7 @@
         <div class="row content">
             @include('components.sidebar')
             <div class="well">
-                <h4>Salary</h4>
+                <h4>Category</h4>
             </div>
             <div id="app" style="width: 100%">
                 <div class="container" style="width: 100%">
@@ -47,7 +47,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Category</th>
-                                            <th>Action</th>
+                                            <th style="width: 150px">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

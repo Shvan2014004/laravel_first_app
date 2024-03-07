@@ -22,20 +22,15 @@ use App\Http\Controllers\SubCategoryController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::post('/income', [IncomeController::class, 'store'])->name('income.store');
-
+Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
 Route::post('/income',  [IncomeController::class,'store'])->name('income.store');
 Route::delete('/income/{id}',[IncomeController::class,'destroy'])->name('income.destroy');
 Route::match(['get', 'put'], '/income/{id}', [IncomeController::class,'update'])->name('income.update');
-
-Route::get('/incomeRe', [IncomeController::class, 'getIncome'])->name('get-Income');
-// Route::get('/incomeRe', [IncomeController::class,'getIncome'])->name('get-Income1');
-// Define a route to fetch income data and apply filters
+Route::get('/incomeRe', [IncomeController::class,'getIncome'])->name('get-Income');
 Route::get('/incomeRe/data', 'IncomeController@getIncome')->name('income.data');
+Route::get('/incomeRe/filterByMonth', 'IncomeController@filterByMonth')->name('income.filterByMonth');
 
-// You may also need a route for filtering expenses by month if not already defined
- Route::get('/incomeRe/filterByMonth', 'IncomeController@filterByMonth')->name('income.filterByMonth');
-Route::post('/expence', [ExpencesController::class, 'store'])->name('expence.store');
+
 Route::get('expence', [ExpencesController::class,'index'])->name('expence.index');
 Route::post('/expence',  [ExpencesController::class,'store'])->name('expence.store');
 Route::delete('/expence/{id}',[ExpencesController::class,'destroy'])->name('expence.destroy');
@@ -67,15 +62,12 @@ Route::delete('/category/{id}',[CategoryController::class,'destroy'])->name('cat
 Route::match(['get', 'put'], '/category/{id}', [CategoryController::class,'update'])->name('category.update');
 
 
-// Route::post('/assets', [AssetsController::class, 'create'])->name('assets.create');
-Route::post('/assets', [AssetsController::class, 'create'])->name('assets.create');
-Route::get('/dashboard', AssetsController::class .'@store')->name('assets.store');
-Route::post('/assets', [AssetsController::class, 'store'])->name('assets.store');
+
+
+Route::post('/assets',  [AssetsController::class,'store'])->name('assets.store');
 Route::get('assets',[AssetsController::class,'display'])->name('assets.display');
-// Route::get('/assets', [AssetsController::class, 'display'])->name('assets.display');
-// Route::get('/assets',[AssetsController::class,'retrive']);
-Route::delete('/assets/{id}',[CategoryController::class,'destroy'])->name('assets.destroy');
-Route::match(['get', 'put'], '/aseets/{id}', [CategoryController::class,'update'])->name('assets.update');
+Route::match(['get', 'put'], '/assets/{id}', [AssetsController::class,'update'])->name('assets.update');
+Route::delete('/assets/{id}',[AssetsController::class,'destroy'])->name('assets.destroy');
 
 Route::get('/', function () {
     return view('welcome');

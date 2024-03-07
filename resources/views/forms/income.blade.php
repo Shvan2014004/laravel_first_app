@@ -14,14 +14,14 @@
 <body style="background: #ddd;">
     <div class="container-fluid">
         <div class="row content">
-            {{-- @include('components.sidebar') --}}
+            @include('components.sidebar')
             <div class="well">
-                <h4>Salary</h4>
+                <h4>Income</h4>
             </div>
-            <div id="app" >
-                <div class="container" >
+            <div id="app" style="width: 100%">
+                <div class="container" style="width: 100%">
                     <div class="col-md-2"></div>
-                    <div class="col-md-8" >
+                    <div class="col-md-8" style="width: 100%">
                         <div class="panel panel-default">
                             <div class="panel-body">
 
@@ -49,7 +49,7 @@
                                             <th>Description</th>
                                             <th>Amount</th>
                                             <th>Type</th>
-                                            <th>Action</th>
+                                            <th style="width: 150px">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

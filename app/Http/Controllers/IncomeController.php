@@ -2,31 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Income;
-use Carbon\Carbon;
 use DataTables;
+use Carbon\Carbon;
+use App\Models\Income;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\DataTables\IncomeDataTable;  
+use Illuminate\Database\Query\Builder;
+
 
 
 class IncomeController extends Controller {
-  
+    public function index( Request $request ) {
+        $income = Income::orderBy( 'id', 'desc' )
+        ->when(
+            $request->date_from && $request->date_to,
+            function ( Builder $builder ) use ( $request ) {
+                $builder->whereBetween(
+                    DB::raw( 'DATE(created_at)' ),
+                    [
+                        $request->date_from,
+                        $request->date_to
+                    ]
+                );
+            }
+        )->paginate( 5 );
+
+        return view( 'forms.income', compact( 'income', 'request' ) );
+    }
 
      
-    public function getIncome(Request $request, IncomeDataTable $dataTable)
-    {
-        $month = $request->input('month');
-        $query = Income::query();
-    
-        if ($month) {
-            $query->whereMonth('date', $month);
-        }
-    
-        return $dataTable->with([
-            'filteredData' => $query->get()
-        ])->render('reports.incomeReport');
-    }
-    
+     public function getIncome(Request $request, IncomeDataTable $dataTable)
+     {
+         $month = $request->input('month');
+         $query = Income::query();
+       
+         if ($month) {
+             $query->whereMonth('date', $month);
+         }
+     
+         return $dataTable->with([
+             'filteredData' => $query->get()
+         ])->render('reports.incomeReport');
+     }
     public function store( Request $request ) {
         $this->validate( $request, [
             'date' => 'required',
