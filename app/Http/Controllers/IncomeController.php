@@ -14,7 +14,7 @@ use Illuminate\Database\Query\Builder;
 
 class IncomeController extends Controller {
     public function index( Request $request ) {
-        $expence = Income::orderBy( 'id', 'desc' )
+        $income = Income::orderBy( 'id', 'desc' )
         ->when(
             $request->date_from && $request->date_to,
             function ( Builder $builder ) use ( $request ) {
@@ -28,7 +28,7 @@ class IncomeController extends Controller {
             }
         )->paginate( 5 );
 
-        return view( 'forms.inx', compact( 'expence', 'request' ) );
+        return view( 'forms.income', compact( 'income', 'request' ) );
     }
 
      
