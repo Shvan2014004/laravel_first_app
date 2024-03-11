@@ -14,9 +14,17 @@
     <div id="app">
 
         <body>
-            <div class="container">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
+            <div class="container-fluid">
+                <div class="container-fluid">
+                    <div class="row content">
+                        @include('components.sidebar')
+                        <div class="well">
+                            <h4>TS3 Enterprises Accounts Dashboard</h4>
+                        </div>
+                        <div id="app" style="width: 100%">
+                            <div class="container" style="width: 100%">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8" style="width: 100%">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <h1>Monthly Expense Report</h1>

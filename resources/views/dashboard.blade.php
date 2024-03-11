@@ -69,13 +69,13 @@
                                         <div class="col-sm-3">
                                             <div class="well">
                                                 <h4>Income</h4>
-                                                <p>Fetch data from income(sum)</p>
+                                                <b><h3>{{App\Models\Income::sum('amount')}}</h3></b>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="well">
                                                 <h4>Expences</h4>
-                                                <p>Fetch data from expenses(sum)</p>
+                                                <b><h3>{{App\Models\Expence::sum('amount')}}</h3></b>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">

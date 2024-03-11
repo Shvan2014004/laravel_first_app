@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\DataTables\IncomeDataTable;  
 use Illuminate\Database\Query\Builder;
-
-
+use Psy\Readline\Hoa\Console;
 
 class IncomeController extends Controller {
     public function index( Request $request ) {
