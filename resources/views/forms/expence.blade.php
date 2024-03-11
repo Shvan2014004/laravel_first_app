@@ -25,24 +25,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
 
-                                {{-- <form action="{{ route('expence.index') }}" method="get">
-                            <div class="row">
-                                <div class="col-md-5 form-group">
-                                    <label for="">Date From</label>
-                                    <input type="date" name="date_from" class="form-control"
-                                        value="{{ $request->date_from }}">
-                                </div>
-                                <div class="col-md-5 form-group">
-                                    <label for="">Date From</label>
-                                    <input type="date" name="date_to" class="form-control"
-                                        value="{{ $request->date_to }}">
-                                </div>
-                                <div class="col-md-2 form-group" style="margin-top:25px;">
-                                    <input type="submit" class="btn btn-primary btn-md"
-                                        style="background-color: #337ab7" value="Search">
-                                </div>
-                            </div>
-                        </form> --}}
+                             
 
                                 <strong>Expense Information</strong>
                                 @if (session('success'))
