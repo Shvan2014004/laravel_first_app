@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\DataTables\IncomeDataTable;  
 use Illuminate\Database\Query\Builder;
 use App\Exports\IncomeExport;
-
-use Dompdf\Dompdf;
+use Psy\Readline\Hoa\Console;use Dompdf\Dompdf;
 use Dompdf\Options;
 class IncomeController extends Controller {
     public function index( Request $request ) {

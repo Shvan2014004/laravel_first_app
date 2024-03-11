@@ -8,6 +8,7 @@ use App\Http\Controllers\AssetsController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SubCategoryController;
 
 
@@ -21,6 +22,10 @@ use App\Http\Controllers\SubCategoryController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/report',[ReportController::class,'index'])->name('report');
+Route::post('/report',[ReportController::class,'index']);
+
 Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
 Route::post('/income',  [IncomeController::class,'store'])->name('income.store');
 Route::delete('/income/{id}',[IncomeController::class,'destroy'])->name('income.destroy');

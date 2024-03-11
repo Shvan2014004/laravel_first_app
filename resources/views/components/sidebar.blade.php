@@ -88,14 +88,30 @@
                     
                 </div>
             </li>
-            <li><button class="dropdown-btn">Reports
+            <li><button class="dropdown-btn" style="padding: 10px">Reports
                     <i class="fa fa-caret-down"></i>
                 </button>
-                <div class="dropdown-container">
-                    <a href="{{ route('get-Income') }}" style="font-size: 18px">Income Report</a>
-                    <a href="#" style="font-size: 18px">Expence Report</a>
-                    <a href="#" style="font-size: 18px">Daily Report</a>
+                <div class="dropdown-container" style="padding: 5px">
+                    <button class="dropdown-btn">Daily Reports
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-container" style="margin: 10px;">
+                        <a href="#" style="font-size:19px;">Income</a>
+                        <a href="#" style="font-size:19px;">Expense</a>
+                        <a href="#" style="font-size:19px;">Balance Sheet</a>
+                    </div>
+                    <button class="dropdown-btn">Monthly Reports
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-container" style="margin: 10px">
+                        <a href="{{route('get-Income')}}" style="font-size:19px;">Income</a>
+                        <a href="{{route('expence.filterByMonth')}}" style="font-size:19px;">Expense</a>
+                        <a href="#" style="font-size:19px;">Balance Sheet</a>
+                    </div>
+                    {{-- <a href="{{ route('income.filterByMonth') }}" style="font-size: 18px">Daily Report</a>
                     <a href="#" style="font-size: 18px">Monthly Report</a>
+                    <a href="#" style="font-size: 18px"></a>
+                    <a href="#" style="font-size: 18px">Monthly Report</a> --}}
                 </div>
             </li>
         </ul><br>
