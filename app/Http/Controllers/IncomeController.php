@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\DataTables\IncomeDataTable;  
 use Illuminate\Database\Query\Builder;
+use App\Exports\IncomeExport;
 
-
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
 class IncomeController extends Controller {
     public function index( Request $request ) {
         $income = Income::orderBy( 'id', 'desc' )
@@ -32,19 +33,7 @@ class IncomeController extends Controller {
     }
 
      
-     public function getIncome(Request $request, IncomeDataTable $dataTable)
-     {
-         $month = $request->input('month');
-         $query = Income::query();
-       
-         if ($month) {
-             $query->whereMonth('date', $month);
-         }
-     
-         return $dataTable->with([
-             'filteredData' => $query->get()
-         ])->render('reports.incomeReport');
-     }
+    
     public function store( Request $request ) {
         $this->validate( $request, [
             'date' => 'required',
@@ -86,4 +75,84 @@ class IncomeController extends Controller {
         return redirect( '/income' )->with( 'success', 'Record deleted successfully' );
     }
 
+    public function filterByMonth( Request $request ) {
+        $month = $request->input( 'month' );
+        $filteredData = Income::whereMonth( 'date', '=', $month )->get();
+
+        return view( 'reports/incomeReport', compact( 'filteredData', 'month' ) );
+    }
+    // Export data to CSV
+
+    public function exportToCSV( Request $request ) {
+
+        $month = $request->input( 'month' );
+        $startDate = $request->input( 'start_date' );
+        $endDate = $request->input( 'end_date' );
+        if ( $month ) {
+            $filteredData = Income::whereMonth( 'date', '=', $month )->get();
+        } else {
+
+            $filteredData = Income::whereBetween( 'date', [ $startDate, $endDate ] )->get();
+
+        }
+
+        // Write data to CSV file
+        $csvFileName = 'income_data.csv';
+        $csvFile = fopen( public_path( 'exports/' . $csvFileName ), 'w' );
+
+        // Write header
+        fputcsv( $csvFile, [ 'ID', 'Date', 'Description', 'Amount', 'Type' ] );
+
+        // Write data
+        foreach ( $filteredData as $item ) {
+            fputcsv( $csvFile, [ $item->id, $item->date, $item->description, $item->amount, $item->type ] );
+        }
+
+        fclose( $csvFile );
+
+        // Download CSV file
+        return response()->download( public_path( 'exports/' . $csvFileName ) );
+    }
+
+    public function exportToPDF( Request $request ) {
+        $month = $request->input( 'month' );
+
+        $startDate = $request->input( 'start_date' );
+        $endDate = $request->input( 'end_date' );
+
+        if ( $month ) {
+            $filteredData = Income::whereMonth( 'date', '=', $month )->get();
+            $html = view( 'reports.incomePDF', compact( 'filteredData', 'month' ) )->render();
+        } else {
+
+            $filteredData = Income::whereBetween( 'date', [ $startDate, $endDate ] )->get();
+            $html = view( 'reports.incomePDF', compact( 'filteredData', 'startDate', 'endDate' ) )->render();
+
+        }
+        // Create a new DOMPDF instance
+        $dompdf = new Dompdf();
+
+        // Load HTML to DOMPDF
+        $dompdf->loadHtml( $html );
+
+        // Set paper size and orientation
+        $dompdf->setPaper( 'A4', 'portrait' );
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to the browser ( download )
+        return $dompdf->stream( 'income_data.pdf' );
+    }
+
+    public function filterByDateRange( Request $request ) {
+        $startDate = $request->input( 'start_date' );
+        $endDate = $request->input( 'end_date' );
+
+        // Assuming your date column is named 'date'
+        $filteredData = Income::whereBetween( 'date', [ $startDate, $endDate ] )->get();
+
+        return view( 'reports.incomeReportDateRange', compact( 'filteredData', 'startDate', 'endDate' ) );
+    }
 }
+

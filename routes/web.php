@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IncomeController;
-use App\Http\Controllers\IncomeReportController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ExpencesController;
 use App\Http\Controllers\AssetsController;
@@ -26,9 +25,10 @@ Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
 Route::post('/income',  [IncomeController::class,'store'])->name('income.store');
 Route::delete('/income/{id}',[IncomeController::class,'destroy'])->name('income.destroy');
 Route::match(['get', 'put'], '/income/{id}', [IncomeController::class,'update'])->name('income.update');
-Route::get('/incomeRe', [IncomeController::class,'getIncome'])->name('get-Income');
-Route::get('/incomeRe/data', 'IncomeController@getIncome')->name('income.data');
-Route::get('/incomeRe/filterByMonth', 'IncomeController@filterByMonth')->name('income.filterByMonth');
+Route::get('/filterIncome', [IncomeController::class, 'filterByMonth'])->name('income.filterByMonth');
+Route::get('/exports/csv', [IncomeController::class, 'exportToCSV'])->name('income.exportCSV');
+Route::get('/exports/pdf',  [IncomeController::class,'exportToPDF'])->name('income.exportPDF');
+Route::get('/filter-by-date-rangeIncome', [IncomeController::class,'filterByDateRange'])->name('income.filterByDateRange');
 
 Route::get('expence', [ExpencesController::class,'index'])->name('expence.index');
 Route::post('/expence',  [ExpencesController::class,'store'])->name('expence.store');
