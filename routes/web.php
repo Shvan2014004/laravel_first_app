@@ -25,6 +25,10 @@ use App\Http\Controllers\SubCategoryController;
 
 Route::get('/report',[ReportController::class,'index'])->name('report');
 Route::post('/report',[ReportController::class,'index']);
+Route::get('/report', [ReportController::class, 'filterByMonth'])->name('balance.filterByMonth');
+Route::get('/expor/csv', [ReportController::class,'exportToCSV'])->name('balance.exportCSV');
+Route::get('/expor/pdf',  [ReportController::class,'exportToPDF'])->name('balance.exportPDF');
+Route::get('/dailyreport', [ReportController::class,'filterByDateRange'])->name('balance.filterByDateRange');
 
 Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
 Route::post('/income',  [IncomeController::class,'store'])->name('income.store');
