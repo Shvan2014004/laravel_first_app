@@ -78,7 +78,7 @@
             <li><a href="{{ route('income.index') }}">Income</a></li>
             <li><a href="{{ route('expence.store') }}">Expenses</a></li>
             <li><a href="{{ route('salary.store') }}">Salary</a></li>
-            <li><button class="dropdown-btn">Assets
+            {{-- <li><button class="dropdown-btn">Assets
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-container">
@@ -87,7 +87,7 @@
                     <a href="{{ route('assets.store') }}" style="font-size: 18px">Assets</a>
                     
                 </div>
-            </li>
+            </li> --}}
             <li><button class="dropdown-btn" style="padding: 10px">Reports
                     <i class="fa fa-caret-down"></i>
                 </button>
@@ -98,7 +98,7 @@
                     <div class="dropdown-container" style="margin: 10px;">
                         <a href="{{route('income.filterByDateRange')}}" style="font-size:19px;">Income</a>
                         <a href="{{route('expence.filterByDateRange')}}" style="font-size:19px;">Expense</a>
-                        <a href="#" style="font-size:19px;">Balance Sheet</a>
+                        <a href="{{route('balance.daily')}}" style="font-size:19px;">Balance Sheet</a>
                     </div>
                     <button class="dropdown-btn">Monthly Reports
                         <i class="fa fa-caret-down"></i>
@@ -106,7 +106,7 @@
                     <div class="dropdown-container" style="margin: 10px">
                         <a href="{{route('income.filterByMonth')}}" style="font-size:19px;">Income</a>
                         <a href="{{route('expence.filterByMonth')}}" style="font-size:19px;">Expense</a>
-                        <a href="#" style="font-size:19px;">Balance Sheet</a>
+                        <a href="{{route('balance.filterByMonth')}}" style="font-size:19px;">Balance Sheet</a>
                     </div>
                    
                 </div>

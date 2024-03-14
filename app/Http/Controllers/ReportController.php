@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
+use DateTime;
 
 class ReportController extends Controller
 {
@@ -49,6 +50,51 @@ class ReportController extends Controller
             'isIncome',
             'isExpence',
             'month',
+            'isSalary',
+            'balance',
+            'sumincome',
+            'sumexpence',
+            'bf'
+
+        )));
+    }
+
+    public function filterByDate(Request $request)
+    {
+        $date = $request->input('date');
+        $income = Income::where('date', '=', $date)->get();
+        $expence = Expence::where('date', '=', $date)->get();
+        $salary = Salary::where('salary_date', '=', $date)->get();
+        // $subcategory = Subcategory::where( 'date', '=', $month )->get();
+        // $category = Category::where( 'date', '=', $month )->get();
+        // $assets = Assets::where( 'date', '=', $month )->get();
+        // $isAssets = $assets->isEmpty();
+        $isIncome = $income->isEmpty();
+        $isExpence = $expence->isEmpty();
+        $isSalary = $salary->isEmpty();
+
+        $sumexpence = $expence->sum('amount')+$salary->sum('netsalary');
+        $sumincome = $income->sum('amount');
+        $balance = $sumincome - $sumexpence;
+
+        $previousDate = new DateTime($date);
+        $previousDate->modify('-1 day');
+        $previousDate = $previousDate->format('Y-m-d');
+        $bfincome = Income::where('date', '=', $previousDate)->sum('amount');
+        $bfexpence = Expence::where('date', '=', $previousDate)->sum('amount');
+        $bfsalary = Salary::where('salary_date', '=', $previousDate)->sum('netsalary');
+    
+        $bf = $bfincome - ($bfexpence + $bfsalary);
+
+        return (view('reports.balanceReportday', compact(
+            'income',
+            'expence',
+            'salary',
+            // 'assets',
+            // 'isAssets',
+            'isIncome',
+            'isExpence',
+            'date',
             'isSalary',
             'balance',
             'sumincome',

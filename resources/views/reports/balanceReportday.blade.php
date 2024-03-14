@@ -24,36 +24,22 @@
                         <div class="col-md-8" style="width: 100%">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <h1>Monthly Report</h1>
-                                    <form method="GET" action="{{ route('balance.filterByMonth') }}">
-                                        <label for="month">Select a month:</label>
-                                        <select name="month" id="month">
-                                            <option value="1" {{ $month == 1 ? 'selected' : '' }}>January</option>
-                                            <option value="2" {{ $month == 2 ? 'selected' : '' }}>February</option>
-                                            <option value="3" {{ $month == 3 ? 'selected' : '' }}>March</option>
-                                            <option value="4" {{ $month == 4 ? 'selected' : '' }}>April</option>
-                                            <option value="5" {{ $month == 5 ? 'selected' : '' }}>May</option>
-                                            <option value="6" {{ $month == 6 ? 'selected' : '' }}>June</option>
-                                            <option value="7" {{ $month == 7 ? 'selected' : '' }}>July</option>
-                                            <option value="8" {{ $month == 8 ? 'selected' : '' }}>August</option>
-                                            <option value="9" {{ $month == 9 ? 'selected' : '' }}>September
-                                            </option>
-                                            <option value="10" {{ $month == 10 ? 'selected' : '' }}>October
-                                            </option>
-                                            <option value="11" {{ $month == 11 ? 'selected' : '' }}>November
-                                            </option>
-                                            <option value="12" {{ $month == 12 ? 'selected' : '' }}>December
-                                            </option>
-
-                                        </select>
+                                    <h1>Daily Report</h1>
+                                    <form method="GET" action="{{ route('balance.daily') }}">
+                                        <div class="form-group">
+                                            <label for="date">Date:</label>
+                                            <input type="date" class="form-control" id="date" name="date"
+                                                value="{{ $date }}">
+                                        </div>
+                                            
                                         <button type="submit">Filter</button>
                                     </form>
                                     <div style="margin-top: 10px;">
                                         <!-- Buttons for exporting data -->
-                                        <a href="{{ route('balance.exportCSV', ['month' => $month]) }}"
+                                        <a href="{{ route('balance.exportCSV', ['date' => $date]) }}"
                                             class="btn btn-primary">Export to CSV</a>
 
-                                        <a href="{{ route('balance.exportPDF', ['month' => $month]) }}"
+                                        <a href="{{ route('balance.exportPDF', ['date' => $date]) }}"
                                             class="btn btn-danger">Export to PDF</a>
                                     </div>
                                     <table class="table table-responsive table-bordered table-stripped"
@@ -78,7 +64,7 @@
             @endforeach
         @endif --}}
                                         <tr>
-                                            <td></td>
+                                            <td>{{$date}}</td>
                                             <td>B/F</td>
                                             <td>{{ $bf }}</td>
                                         </tr>

@@ -137,16 +137,18 @@
                                                 <option value="Bank">Bank</option>
                                             </select>
                                         </div>
+                                        <div class="modal-footer">
 
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="reset" class="btn btn-primary"
+                                                onclick="resetForm()">Reset</button>
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
 
                                     </form>
                                 </div>
-                                <div class="modal-footer">
 
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="reset" class="btn btn-primary" onclick="resetForm()">Reset</button>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                </div>
                             </div>
                         </div>
                     </div>
