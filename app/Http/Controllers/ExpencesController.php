@@ -69,8 +69,8 @@ class ExpencesController extends Controller {
     public function filterByMonth( Request $request ) {
         $month = $request->input( 'month' );
         $filteredData = Expence::whereMonth( 'date', '=', $month )->get();
-
-        return view( 'reports/expenceReport', compact( 'filteredData', 'month' ) );
+        $total=$filteredData->sum('amount');
+        return view( 'reports/expenceReport', compact( 'filteredData', 'month','total' ) );
     }
     // Export data to CSV
 

@@ -92,6 +92,12 @@
                                                                 </tr>
                                                             @endforeach
                                                         @endif
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <th>Total</th>
+                                                            <th>{{$total}}</th>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             @else
