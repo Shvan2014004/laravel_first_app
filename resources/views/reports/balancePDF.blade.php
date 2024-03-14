@@ -13,7 +13,9 @@
             border-collapse: collapse;
         }
 
-        table, th, td {
+        table,
+        th,
+        td {
             border: 1px solid black;
             padding: 8px;
         }
@@ -21,11 +23,13 @@
 </head>
 
 <body>
-    <h1> @if(isset($month))
-        Monthly Balance Report - Month: {{ $month }}
-    @elseif(isset($startDate) && isset($endDate))
-      Balance Report - Date Range: {{ $startDate }} to {{ $endDate }}
-    @endif</h1>
+    <h1>
+        @if (isset($month))
+            Monthly Balance Report - Month: {{ $month }}
+        @elseif(isset($startDate) && isset($endDate))
+            Balance Report - Date Range: {{ $startDate }} to {{ $endDate }}
+        @endif
+    </h1>
     <table class="table table-responsive table-bordered table-stripped" style="margin-top:10px;">
         <tr>
             <th>Date</th>
@@ -72,9 +76,28 @@
                 </tr>
             @endforeach
         @endif
+        @foreach ($salary as $row)
+            <tr>
+                <td>{{ $row->salary_date }}</td>
+                <td>Salary of {{ $row->employee_name }}</td>
+                <td></td>
+                <td>{{ $row->netsalary }}</td>
+            </tr>
+        @endforeach
+        @endif
         <tr>
             <th colspan="2">Total</th>
-            <th></th>
+            <th>{{ $sumincome }}</th>
+            <th>{{ $sumexpence }}</th>
+        </tr>
+        <tr>
+            <th colspan="2">Balance</th>
+            @if ($balance > 0)
+                <th>{{ $balance }}</th>
+            @else
+                <th></th>
+                <th>{{ $balance }}</th>
+            @endif
         </tr>
     </table>
 </body>

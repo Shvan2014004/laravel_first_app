@@ -13,35 +13,8 @@ use Dompdf\Dompdf;
 
 class ReportController extends Controller
 {
-    public function index(Request $request)
-    {
-        $start = $request->input('start');
-        $end = $request->input('end');
+   
 
-        // $income = Income::whereBetween('date',[$start,$end])->get();
-        $income = Income::all();
-        $expence = Expence::all();
-        $salary = Salary::all();
-        $subcategory = Subcategory::all();
-        $category = Category::all();
-        $assets = Assets::all();
-
-        $isAssets = $assets->isEmpty();
-        $isIncome = $income->isEmpty();
-        $isExpence = $expence->isEmpty();
-        
-
-        return (view('reports.balanceReport', compact(
-            'income',
-            'expence',
-            'salary',
-            'assets',
-            'isAssets',
-            'isIncome',
-            'isExpence',
-
-        )));
-    }
     public function filterByMonth(Request $request)
     {
         $month = $request->input('month');
@@ -51,15 +24,21 @@ class ReportController extends Controller
         // $subcategory = Subcategory::whereMonth( 'date', '=', $month )->get();
         // $category = Category::whereMonth( 'date', '=', $month )->get();
         // $assets = Assets::whereMonth( 'date', '=', $month )->get();
-
         // $isAssets = $assets->isEmpty();
         $isIncome = $income->isEmpty();
         $isExpence = $expence->isEmpty();
         $isSalary = $salary->isEmpty();
-        $sumexpence = $expence->sum('amount');
+
+        $sumexpence = $expence->sum('amount')+$salary->sum('netsalary');
         $sumincome = $income->sum('amount');
-        $balance = $sumincome-$sumexpence;
-        
+        $balance = $sumincome - $sumexpence;
+
+        $previousMonth = ($month == 1) ? 12 : ($month - 1);
+        $bfincome = Income::whereMonth('date', '=', $previousMonth)->sum('amount');
+        $bfexpence = Expence::whereMonth('date', '=', $previousMonth)->sum('amount');
+        $bfsalary = Salary::whereMonth('salary_date', '=', $previousMonth)->sum('netsalary');
+    
+        $bf = $bfincome - ($bfexpence + $bfsalary);
 
         return (view('reports.balanceReport', compact(
             'income',
@@ -73,7 +52,8 @@ class ReportController extends Controller
             'isSalary',
             'balance',
             'sumincome',
-            'sumexpence'
+            'sumexpence',
+            'bf'
 
         )));
     }
@@ -155,6 +135,8 @@ class ReportController extends Controller
             $isExpence = $expence->isEmpty();
             $isSalary = $salary->isEmpty();
             $sumexpence = $expence->sum('amount');
+            $sumincome = $income->sum('amount');
+            $balance = $sumincome - $sumexpence;
 
             $html = (view('reports.balanceReport', compact(
                 'income',
@@ -167,6 +149,9 @@ class ReportController extends Controller
                 'month',
                 'isSalary',
                 'sumexpence',
+                'sumincome',
+                'balance',
+
             )))->render();
         } else {
             $income = Income::whereBetween('date', '=', [$startDate, $endDate])->get();
@@ -181,6 +166,8 @@ class ReportController extends Controller
             $isExpence = $expence->isEmpty();
             $isSalary = $salary->isEmpty();
             $sumexpence = $expence->sum('amount');
+            $sumincome = $income->sum('amount');
+            $balance = $sumincome - $sumexpence;
 
             $html = (view('reports.balanceReport', compact(
                 'income',
@@ -194,6 +181,9 @@ class ReportController extends Controller
                 'isSalary',
                 'startDate',
                 'endDate',
+                'sumexpence',
+                'sumincome',
+                'balance',
             )))->render();
         }
         // Create a new DOMPDF instance
@@ -218,8 +208,36 @@ class ReportController extends Controller
         $endDate = $request->input('end_date');
 
         // Assuming your date column is named 'date'
-        $filteredData = Income::whereBetween('date', [$startDate, $endDate])->get();
+        $income = Income::whereBetween('date', '=', [$startDate, $endDate])->get();
+        $expence = Expence::whereBetween('date', '=', [$startDate, $endDate])->get();
+        $salary = Salary::whereBetween('salary_date', '=', [$startDate, $endDate])->get();
+        // $subcategory = Subcategory::whereMonth( 'date', '=', [ $startDate, $endDate ] )->get();
+        // $category = Category::whereMonth( 'date', '=', [ $startDate, $endDate ] )->get();
+        // $assets = Assets::whereMonth( 'date', '=', [ $startDate, $endDate ] )->get();
 
-        return view('reports.balanceDateRangeReport', compact('filteredData', 'startDate', 'endDate'));
+        // $isAssets = $assets->isEmpty();
+        $isIncome = $income->isEmpty();
+        $isExpence = $expence->isEmpty();
+        $isSalary = $salary->isEmpty();
+        $sumexpence = $expence->sum('amount');
+        $sumincome = $income->sum('amount');
+        $balance = $sumincome - $sumexpence;
+
+        $html = (view('reports.balanceReport', compact(
+            'income',
+            'expence',
+            'salary',
+            // 'assets',
+            // 'isAssets',
+            'isIncome',
+            'isExpence',
+            'month',
+            'isSalary',
+            'startDate',
+            'endDate',
+            'sumexpence',
+            'sumincome',
+            'balance',
+        )))->render();
     }
 }
