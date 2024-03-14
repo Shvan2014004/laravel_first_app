@@ -25,72 +25,84 @@
                             <div class="container" style="width: 100%">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-8" style="width: 100%">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <h1>Monthly Expense Report</h1>
-                            <form method="GET" action="{{ route('expence.filterByMonth') }}">
-                                <label for="month">Select a month:</label>
-                                <select name="month" id="month">
-                                    <option value="1" {{ $month == 1 ? 'selected' : '' }}>January</option>
-                                    <option value="2" {{ $month == 2 ? 'selected' : '' }}>February</option>
-                                    <option value="3" {{ $month == 3 ? 'selected' : '' }}>March</option>
-                                    <option value="4" {{ $month == 4 ? 'selected' : '' }}>April</option>
-                                    <option value="5" {{ $month == 5 ? 'selected' : '' }}>May</option>
-                                    <option value="6" {{ $month == 6 ? 'selected' : '' }}>June</option>
-                                    <option value="7" {{ $month == 7 ? 'selected' : '' }}>July</option>
-                                    <option value="8" {{ $month == 8 ? 'selected' : '' }}>August</option>
-                                    <option value="9" {{ $month == 9 ? 'selected' : '' }}>September</option>
-                                    <option value="10" {{ $month == 10 ? 'selected' : '' }}>October</option>
-                                    <option value="11" {{ $month == 11 ? 'selected' : '' }}>November</option>
-                                    <option value="12" {{ $month == 12 ? 'selected' : '' }}>December</option>
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h1>Monthly Expense Report</h1>
+                                            <form method="GET" action="{{ route('expence.filterByMonth') }}">
+                                                <label for="month">Select a month:</label>
+                                                <select name="month" id="month">
+                                                    <option value="1" {{ $month == 1 ? 'selected' : '' }}>January
+                                                    </option>
+                                                    <option value="2" {{ $month == 2 ? 'selected' : '' }}>February
+                                                    </option>
+                                                    <option value="3" {{ $month == 3 ? 'selected' : '' }}>March
+                                                    </option>
+                                                    <option value="4" {{ $month == 4 ? 'selected' : '' }}>April
+                                                    </option>
+                                                    <option value="5" {{ $month == 5 ? 'selected' : '' }}>May
+                                                    </option>
+                                                    <option value="6" {{ $month == 6 ? 'selected' : '' }}>June
+                                                    </option>
+                                                    <option value="7" {{ $month == 7 ? 'selected' : '' }}>July
+                                                    </option>
+                                                    <option value="8" {{ $month == 8 ? 'selected' : '' }}>August
+                                                    </option>
+                                                    <option value="9" {{ $month == 9 ? 'selected' : '' }}>
+                                                        September</option>
+                                                    <option value="10" {{ $month == 10 ? 'selected' : '' }}>October
+                                                    </option>
+                                                    <option value="11" {{ $month == 11 ? 'selected' : '' }}>
+                                                        November</option>
+                                                    <option value="12" {{ $month == 12 ? 'selected' : '' }}>
+                                                        December</option>
 
-                                </select>
-                                <button type="submit">Filter</button>
-                            </form>
-                            <div style="margin-top: 10px;">
-                                <!-- Buttons for exporting data -->
-                                <a href="{{ route('expence.exportCSV', ['month' => $month]) }}"
-                                    class="btn btn-primary">Export to CSV</a>
+                                                </select>
+                                                <button type="submit">Filter</button>
+                                            </form>
+                                            <div style="margin-top: 10px;">
+                                                <!-- Buttons for exporting data -->
+                                                <a href="{{ route('expence.exportCSV', ['month' => $month]) }}"
+                                                    class="btn btn-primary">Export to CSV</a>
 
-                                <a href="{{ route('expence.exportPDF', ['month' => $month]) }}"
-                                    class="btn btn-danger">Export to PDF</a>
+                                                <a href="{{ route('expence.exportPDF', ['month' => $month]) }}"
+                                                    class="btn btn-danger">Export to PDF</a>
+                                            </div>
+                                            @if (count($filteredData) > 0)
+                                                <table class="table table-responsive table-bordered table-stripped"
+                                                    style="margin-top:10px;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Date</th>
+                                                            <th>Description</th>
+                                                            <th>Amount</th>
+                                                            <th>Type</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (isset($filteredData) && count($filteredData) > 0)
+                                                            @foreach ($filteredData as $item)
+                                                                <tr>
+                                                                    <td>{{ $item->id }}</td>
+                                                                    <td>{{ $item->date }}</td>
+                                                                    <td>{{ $item->description }}</td>
+                                                                    <td>{{ $item->amount }}</td>
+                                                                    <td>{{ $item->type }}</td>
+
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            @else
+                                                <p>No records found.</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            @if (count($filteredData) > 0)
-                                <table class="table table-responsive table-bordered table-stripped"
-                                    style="margin-top:10px;">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Date</th>
-                                            <th>Description</th>
-                                            <th>Amount</th>
-                                            <th>Type</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (isset($filteredData) && count($filteredData) > 0)
-                                            @foreach ($filteredData as $item)
-                                                <tr>
-                                                    <td>{{ $item->id }}</td>
-                                                    <td>{{ $item->date }}</td>
-                                                    <td>{{ $item->description }}</td>
-                                                    <td>{{ $item->amount }}</td>
-                                                    <td>{{ $item->type }}</td>
-
-                                                </tr>
-                                            @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
-                            @else
-                                <p>No records found.</p>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+                            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         </body>
 
 </html>
