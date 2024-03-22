@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use App\Exports\ExpenceExport;
-
+use DateTime;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -68,9 +68,15 @@ class ExpencesController extends Controller {
 
     public function filterByMonth( Request $request ) {
         $month = $request->input( 'month' );
+
+        $dateTime = new DateTime();
+        $dateTime->setDate(date('Y'), $month, 1); // Set the year and month
+        $monthName = $dateTime->format('F');
+
         $filteredData = Expence::whereMonth( 'date', '=', $month )->get();
         $total=$filteredData->sum('amount');
-        return view( 'reports/expenceReport', compact( 'filteredData', 'month','total' ) );
+        $n=1;
+        return view( 'reports/expenceReport', compact( 'filteredData', 'month','total' ,'n') );
     }
     // Export data to CSV
 
@@ -79,11 +85,14 @@ class ExpencesController extends Controller {
         $month = $request->input( 'month' );
         $startDate = $request->input( 'start_date' );
         $endDate = $request->input( 'end_date' );
+        $n=1;
         if ( $month ) {
             $filteredData = Expence::whereMonth( 'date', '=', $month )->get();
+            $total=$filteredData->sum('amount');
         } else {
 
             $filteredData = Expence::whereBetween( 'date', [ $startDate, $endDate ] )->get();
+            $total=$filteredData->sum('amount');
 
         }
 
@@ -96,7 +105,7 @@ class ExpencesController extends Controller {
 
         // Write data
         foreach ( $filteredData as $item ) {
-            fputcsv( $csvFile, [ $item->id, $item->date, $item->description, $item->amount, $item->type ] );
+            fputcsv( $csvFile, [ $n++, $item->date, $item->description, $item->amount, $item->type ] );
         }
 
         fclose( $csvFile );
@@ -107,17 +116,22 @@ class ExpencesController extends Controller {
 
     public function exportToPDF( Request $request ) {
         $month = $request->input( 'month' );
+        $dateTime = new DateTime();
+        $dateTime->setDate(date('Y'), $month, 1); // Set the year and month
+        $monthName = $dateTime->format('F');
 
         $startDate = $request->input( 'start_date' );
         $endDate = $request->input( 'end_date' );
-
+        $n=1;
         if ( $month ) {
             $filteredData = Expence::whereMonth( 'date', '=', $month )->get();
-            $html = view( 'reports.expencePDF', compact( 'filteredData', 'month' ) )->render();
+            $total=$filteredData->sum('amount');
+            $html = view( 'reports.expencePDF', compact( 'filteredData', 'month','n','total','monthName' ) )->render();
         } else {
 
             $filteredData = Expence::whereBetween( 'date', [ $startDate, $endDate ] )->get();
-            $html = view( 'reports.expencePDF', compact( 'filteredData', 'startDate', 'endDate' ) )->render();
+            $total=$filteredData->sum('amount');
+            $html = view( 'reports.expencePDF', compact( 'filteredData', 'startDate', 'endDate','n','total' ) )->render();
 
         }
         // Create a new DOMPDF instance
@@ -131,18 +145,26 @@ class ExpencesController extends Controller {
 
         // Render the HTML as PDF
         $dompdf->render();
-
+        $name = 'Expence Report - ';
+        if ($month >= 1 && $month <= 12) {
+             // Get the month name
+            $filename = $name . $monthName;
+        } else {
+            $filename = $name . $startDate . " to " . $endDate;
+        }
         // Output the generated PDF to the browser ( download )
-        return $dompdf->stream( 'expence_data.pdf' );
+        return $dompdf->stream($filename);
+
+   
     }
 
     public function filterByDateRange( Request $request ) {
         $startDate = $request->input( 'start_date' );
         $endDate = $request->input( 'end_date' );
-
+        $n=1;
         // Assuming your date column is named 'date'
         $filteredData = Expence::whereBetween( 'date', [ $startDate, $endDate ] )->get();
-
-        return view( 'reports.expenceDateRangeReport', compact( 'filteredData', 'startDate', 'endDate' ) );
+        $total=$filteredData->sum('amount');
+        return view( 'reports.expenceDateRangeReport', compact( 'filteredData', 'startDate', 'endDate' ,'n','total') );
     }
 }

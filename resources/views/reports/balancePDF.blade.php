@@ -23,13 +23,20 @@
 </head>
 
 <body>
-    <h1>
+        <center>
+            <div>
+                <img src="{{ asset('images/logo.jpeg') }}" alt="Logo" height="100" width="100">
+    <h1>TS3 Enterprises - Accounts</h1>
+    
+    <h3>
         @if (isset($month))
-            Monthly Balance Report - Month: {{ $month }}
-        @elseif(isset($startDate) && isset($endDate))
-            Balance Report - Date Range: {{ $startDate }} to {{ $endDate }}
+            Monthly Balance Report - Month: {{ $monthName }}
+        @elseif(isset($date))
+            Balance Report : {{ $date }}
         @endif
-    </h1>
+    </h3>
+            </div>
+</center>
     <table class="table table-responsive table-bordered table-stripped" style="margin-top:10px;">
         <tr>
             <th>Date</th>
@@ -37,19 +44,31 @@
             <th>Debit</th>
             <th>Credit</th>
         </tr>
-        {{-- @if (!$isAssets)
-            <tr>
-                <td colspan="4"><b>Assets</b></td>
-            </tr>
-            @foreach ($assets as $row)
-                <tr>
-                    <td>{{ $row->date }}</td>
-                    <td>{{ $row->description }}</td>
-                    <td></td>
-                    <td>{{ $row->amount }}</td>
-                </tr>
-            @endforeach
-        @endif --}}
+        @if (isset($month))
+        <tr>
+            <td></td>
+            <td>B/F</td>
+            @if ($bf>0)
+            <td>{{ $bf }}</td>
+            <td></td>  
+            @else
+            <td></td>
+            <td>{{ $bf }}</td>              
+            @endif
+        </tr>
+        @elseif(isset($date))
+        <tr>
+            <td>{{ $date }}</td>
+            <td>B/F</td>
+            @if ($bf>0)
+            <td>{{ $bf }}</td>
+            <td></td>  
+            @else
+            <td></td>
+            <td>{{ $bf }}</td>              
+            @endif
+        </tr>
+        @endif
         @if (!$isIncome)
             <tr>
                 <td colspan="4"><b>Income</b></td>
@@ -84,7 +103,7 @@
                 <td>{{ $row->netsalary }}</td>
             </tr>
         @endforeach
-        @endif
+
         <tr>
             <th colspan="2">Total</th>
             <th>{{ $sumincome }}</th>
@@ -94,6 +113,7 @@
             <th colspan="2">Balance</th>
             @if ($balance > 0)
                 <th>{{ $balance }}</th>
+                <th></th>
             @else
                 <th></th>
                 <th>{{ $balance }}</th>

@@ -13,7 +13,9 @@
             border-collapse: collapse;
         }
 
-        table, th, td {
+        table,
+        th,
+        td {
             border: 1px solid black;
             padding: 8px;
         }
@@ -21,11 +23,15 @@
 </head>
 
 <body>
-    <h1> @if(isset($month))
-        Monthly Expense Report - Month: {{ $month }}
-    @elseif(isset($startDate) && isset($endDate))
-       Annual Expense Report - Date Range: {{ $startDate }} to {{ $endDate }}
-    @endif</h1>
+    <center>
+    <h2>
+        @if (isset($month))
+            Monthly Expense Report - Month: {{ $monthName }}
+        @elseif(isset($startDate) && isset($endDate))
+            Annual Expense Report - Date From: {{ $startDate }} to {{ $endDate }}
+        @endif
+    </h2>
+</center>
     <table>
         <thead>
             <tr>
@@ -38,14 +44,21 @@
         </thead>
         <tbody>
             @foreach ($filteredData as $item)
-            <tr>
-                <td>{{ $item->id }}</td>
-                <td>{{ $item->date }}</td>
-                <td>{{ $item->description }}</td>
-                <td>{{ $item->amount }}</td>
-                <td>{{ $item->type }}</td>
-            </tr>
+                <tr>
+                    <td>{{ $n++ }}</td>
+                    <td>{{ $item->date }}</td>
+                    <td>{{ $item->description }}</td>
+                    <td>{{ $item->amount }}</td>
+                    <td>{{ $item->type }}</td>
+                </tr>
             @endforeach
+            <tr>
+                <td></td>
+                <td></td>
+                <th>Total</th>
+                <th>{{ $total }}</th>
+                <th></th>
+            </tr>
         </tbody>
     </table>
 </body>

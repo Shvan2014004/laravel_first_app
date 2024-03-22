@@ -13,6 +13,7 @@ use App\Exports\IncomeExport;
 use Psy\Readline\Hoa\Console;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use DateTime;
 
 class IncomeController extends Controller
 {
@@ -85,7 +86,17 @@ class IncomeController extends Controller
         $month = $request->input('month');
         $filteredData = Income::whereMonth('date', '=', $month)->get();
         $total = $filteredData->sum('amount');
-        return view('reports/incomeReport', compact('filteredData', 'month','total'));
+        $n = 1;
+        $dateTime = new DateTime();
+        $dateTime->setDate(date('Y'), $month, 1); // Set the year and month
+        $monthName = $dateTime->format('F');
+        return view('reports/incomeReport', compact(
+            'filteredData',
+            'month',
+            'total',
+            'n',
+            'monthName'
+        ));
     }
     // Export data to CSV
 
@@ -95,13 +106,15 @@ class IncomeController extends Controller
         $month = $request->input('month');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
+
+        $n = 1;
         if ($month) {
             $filteredData = Income::whereMonth('date', '=', $month)->get();
         } else {
 
             $filteredData = Income::whereBetween('date', [$startDate, $endDate])->get();
         }
-
+        $total = $filteredData->sum('amount');
         // Write data to CSV file
         $csvFileName = 'income_data.csv';
         $csvFile = fopen(public_path('exports/' . $csvFileName), 'w');
@@ -111,8 +124,9 @@ class IncomeController extends Controller
 
         // Write data
         foreach ($filteredData as $item) {
-            fputcsv($csvFile, [$item->id, $item->date, $item->description, $item->amount, $item->type]);
+            fputcsv($csvFile, [$n++, $item->date, $item->description, $item->amount, $item->type]);
         }
+        fputcsv($csvFile, ['Total', '', '', $total, '']);
 
         fclose($csvFile);
 
@@ -126,15 +140,22 @@ class IncomeController extends Controller
 
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
+        $n = 1;
+        $dateTime = new DateTime();
+        $dateTime->setDate(date('Y'), $month, 1); // Set the year and month
+        $monthName = $dateTime->format('F');
 
         if ($month) {
             $filteredData = Income::whereMonth('date', '=', $month)->get();
-            $html = view('reports.incomePDF', compact('filteredData', 'month'))->render();
+            $total = $filteredData->sum('amount');
+            $html = view('reports.incomePDF', compact('filteredData', 'month', 'n', 'total', 'monthName'))->render();
         } else {
 
             $filteredData = Income::whereBetween('date', [$startDate, $endDate])->get();
-            $html = view('reports.incomePDF', compact('filteredData', 'startDate', 'endDate'))->render();
+            $total = $filteredData->sum('amount');
+            $html = view('reports.incomePDF', compact('filteredData', 'startDate', 'endDate', 'n', 'total'))->render();
         }
+
         // Create a new DOMPDF instance
         $dompdf = new Dompdf();
 
@@ -147,8 +168,17 @@ class IncomeController extends Controller
         // Render the HTML as PDF
         $dompdf->render();
 
+        $name = 'Income Report - ';
+        if ($month >= 1 && $month <= 12) {
+            $dateTime = new DateTime();
+            $dateTime->setDate(date('Y'), $month, 1); // Set the year and month
+            $monthName = $dateTime->format('F'); // Get the month name
+            $filename = $name . $monthName;
+        } else {
+            $filename = $name . $startDate . " to " . $endDate;
+        }
         // Output the generated PDF to the browser ( download )
-        return $dompdf->stream('income_data.pdf');
+        return $dompdf->stream($filename);
     }
 
     public function filterByDateRange(Request $request)
@@ -156,9 +186,16 @@ class IncomeController extends Controller
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
+        $n = 1;
         // Assuming your date column is named 'date'
         $filteredData = Income::whereBetween('date', [$startDate, $endDate])->get();
-
-        return view('reports.incomeReportDateRange', compact('filteredData', 'startDate', 'endDate'));
+        $total = $filteredData->sum('amount');
+        return view('reports.incomeReportDateRange', compact(
+            'filteredData',
+            'startDate',
+            'endDate',
+            'n',
+            'total'
+        ));
     }
 }

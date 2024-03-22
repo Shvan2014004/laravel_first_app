@@ -25,15 +25,38 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <h1>Daily Report</h1>
+
                                     <form method="GET" action="{{ route('balance.daily') }}">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label for="date">Start Date:</label>
+                                                    <input type="date" class="form-control" id="date"
+                                                        name="date" value="{{ $date }}">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-2">
+                                                <button type="submit" class="btn btn-primary"
+                                                    style="margin-top: 25px;">Filter</button>
+                                            
+                                                {{-- <button type="reset" class="btn btn-primary"
+                                                    style="margin-top: 25px; background-color:red;" value="Reset">Reset</button> --}}
+                                            </div>
+                                        </div>
+                                    </form>
+                                    {{-- <form method="GET" action="{{ route('balance.daily') }}">
                                         <div class="form-group">
+
                                             <label for="date">Date:</label>
                                             <input type="date" class="form-control" id="date" name="date"
-                                                value="{{ $date }}">
+                                                value="{{ $date }}" style="width: 300px;">
+
+                                            <button type="submit" class="btn btn-primary">Filter</button>
                                         </div>
-                                            
-                                        <button type="submit">Filter</button>
-                                    </form>
+
+                                    </form> --}}
+
                                     <div style="margin-top: 10px;">
                                         <!-- Buttons for exporting data -->
                                         <a href="{{ route('balance.exportCSV', ['date' => $date]) }}"
@@ -64,7 +87,7 @@
             @endforeach
         @endif --}}
                                         <tr>
-                                            <td>{{$date}}</td>
+                                            <td>{{ $date }}</td>
                                             <td>B/F</td>
                                             <td>{{ $bf }}</td>
                                         </tr>
@@ -82,19 +105,19 @@
                                             @endforeach
                                         @endif
                                         {{-- @if (!$isExpence || $isSalary) --}}
+                                        <tr>
+                                            <td colspan="4"><b>Expense</b></td>
+                                        </tr>
+                                        {{-- @endif --}}
+                                        @foreach ($expence as $row)
                                             <tr>
-                                                <td colspan="4"><b>Expense</b></td>
+                                                <td>{{ $row->date }}</td>
+                                                <td>{{ $row->description }}</td>
+                                                <td></td>
+                                                <td>{{ $row->amount }}</td>
                                             </tr>
-                                            {{-- @endif --}}
-                                            @foreach ($expence as $row)
-                                                <tr>
-                                                    <td>{{ $row->date }}</td>
-                                                    <td>{{ $row->description }}</td>
-                                                    <td></td>
-                                                    <td>{{ $row->amount }}</td>
-                                                </tr>
-                                            @endforeach
-                                        
+                                        @endforeach
+
                                         {{-- @if (!$isSalary)
                                             @foreach ($salary as $row)
                                                 <tr>
@@ -105,14 +128,14 @@
                                                 </tr>
                                             @endforeach
                                         @endif --}}
-                                        @foreach ($salary as $row )
+                                        @foreach ($salary as $row)
                                             <tr>
                                                 <td>{{ $row->salary_date }}</td>
                                                 <td>Salary of {{ $row->employee_name }}</td>
                                                 <td></td>
                                                 <td>{{ $row->netsalary }}</td>
                                             </tr>
-                                            @endforeach
+                                        @endforeach
                                         <tr>
                                             <th colspan="2">Total</th>
                                             <th>{{ $sumincome }}</th>

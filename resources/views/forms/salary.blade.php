@@ -99,7 +99,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{-- {{ $salary->links() }} --}}
+                                {{ $salary->links() }}
                             </div>
                         </div>
                     </div>

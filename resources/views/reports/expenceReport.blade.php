@@ -67,41 +67,45 @@
                                                 <a href="{{ route('expence.exportPDF', ['month' => $month]) }}"
                                                     class="btn btn-danger">Export to PDF</a>
                                             </div>
-                                            @if (count($filteredData) > 0)
-                                                <table class="table table-responsive table-bordered table-stripped"
-                                                    style="margin-top:10px;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Date</th>
-                                                            <th>Description</th>
-                                                            <th>Amount</th>
-                                                            <th>Type</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @if (isset($filteredData) && count($filteredData) > 0)
-                                                            @foreach ($filteredData as $item)
-                                                                <tr>
-                                                                    <td>{{ $item->id }}</td>
-                                                                    <td>{{ $item->date }}</td>
-                                                                    <td>{{ $item->description }}</td>
-                                                                    <td>{{ $item->amount }}</td>
-                                                                    <td>{{ $item->type }}</td>
+                                            @if ($month != null)
+                                                @if (count($filteredData) > 0)
+                                                    <table class="table table-responsive table-bordered table-stripped"
+                                                        style="margin-top:10px;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Date</th>
+                                                                <th>Description</th>
+                                                                <th>Amount</th>
+                                                                <th>Type</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (isset($filteredData) && count($filteredData) > 0)
+                                                                @foreach ($filteredData as $item)
+                                                                    <tr>
+                                                                        <td>{{ $n++ }}</td>
+                                                                        <td>{{ $item->date }}</td>
+                                                                        <td>{{ $item->description }}</td>
+                                                                        <td>{{ $item->amount }}</td>
+                                                                        <td>{{ $item->type }}</td>
 
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <th>Total</th>
-                                                            <th>{{$total}}</th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            @else
-                                                <p>No records found.</p>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @endif
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <th>Total</th>
+                                                                <th>{{ $total }}</th>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                @else
+                                                <center>
+                                                    <p>No records found.</p>
+                                                </center>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>

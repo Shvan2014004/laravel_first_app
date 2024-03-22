@@ -26,7 +26,7 @@
                             <div class="col-md-8" style="width: 100%">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
-                                        <h1>Annual Expense Report</h1>
+                                        <h1>Expense Report</h1>
                                         <form method="GET" action="{{ route('expence.filterByDateRange') }}">
                                             <div class="row">
                                                 <div class="col-md-5">
@@ -57,34 +57,44 @@
                                             <a href="{{ route('expence.exportPDF', ['start_date' => $startDate, 'end_date' => $endDate]) }}"
                                                 class="btn btn-danger">Export to PDF</a>
                                         </div>
-                                        @if (count($filteredData) > 0)
-                                            <table class="table table-responsive table-bordered table-stripped"
-                                                style="margin-top:10px;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Date</th>
-                                                        <th>Description</th>
-                                                        <th>Amount</th>
-                                                        <th>Type</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if (isset($filteredData) && count($filteredData) > 0)
-                                                        @foreach ($filteredData as $item)
-                                                            <tr>
-                                                                <td>{{ $item->id }}</td>
-                                                                <td>{{ $item->date }}</td>
-                                                                <td>{{ $item->description }}</td>
-                                                                <td>{{ $item->amount }}</td>
-                                                                <td>{{ $item->type }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                </tbody>
-                                            </table>
-                                        @else
-                                            <p>No records found.</p>
+                                        @if ($startDate != null)
+                                            @if (count($filteredData) > 0)
+                                                <table class="table table-responsive table-bordered table-stripped"
+                                                    style="margin-top:10px;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Date</th>
+                                                            <th>Description</th>
+                                                            <th>Amount</th>
+                                                            <th>Type</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (isset($filteredData) && count($filteredData) > 0)
+                                                            @foreach ($filteredData as $item)
+                                                                <tr>
+                                                                    <td>{{ $n++ }}</td>
+                                                                    <td>{{ $item->date }}</td>
+                                                                    <td>{{ $item->description }}</td>
+                                                                    <td>{{ $item->amount }}</td>
+                                                                    <td>{{ $item->type }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <th>Total</th>
+                                                            <th>{{ $total }}</th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            @else
+                                                <center>
+                                                    <p>No records found.</p>
+                                                </center>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
