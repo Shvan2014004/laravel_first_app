@@ -25,7 +25,31 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <h1>Daily Report</h1>
-
+{{-- @if($bf==null || $bf==0)
+<div>
+    <script>
+        // Prompt the user to input balance data
+        var bf = prompt('Please enter the balance:');
+        
+        // Send the input data to the server using AJAX
+        if (bf) {
+            // Create a new AJAX request
+            var xhr = new XMLHttpRequest();
+    
+            // Configure the request
+            xhr.open('POST', '{{ route('balance.daily') }}'); // Replace 'store-balance' with your route name
+            xhr.setRequestHeader('Content-Type', 'application/json');
+    
+            // Define the data to be sent
+            var data = JSON.stringify({ bf: bf });
+    
+            // Send the request
+            xhr.send(data);
+        }
+    </script>
+     
+</div>
+@endif --}}
                                     <form method="GET" action="{{ route('balance.daily') }}">
                                         <div class="row">
                                             <div class="col-md-5">
@@ -38,7 +62,7 @@
                                             
                                             <div class="col-md-2">
                                                 <button type="submit" class="btn btn-primary"
-                                                    style="margin-top: 25px;">Filter</button>
+                                                    style="margin-top: 25px;" id="filter">Filter</button>
                                             
                                                 {{-- <button type="reset" class="btn btn-primary"
                                                     style="margin-top: 25px; background-color:red;" value="Reset">Reset</button> --}}
@@ -65,6 +89,7 @@
                                         <a href="{{ route('balance.exportPDF', ['date' => $date]) }}"
                                             class="btn btn-danger">Export to PDF</a>
                                     </div>
+                                    {{-- {{$previousDate}} --}}
                                     <table class="table table-responsive table-bordered table-stripped"
                                         style="margin-top:10px;">
                                         <tr>
