@@ -17,6 +17,25 @@
             color: white !important;
             margin: 0 !important;
         }
+        .note {
+            background-color: #41C9E2;
+            padding: 20px;
+            border-radius: 15px 20px;
+            margin: 0 auto 10px;
+            text-align: center;
+            width: 70%;
+        }
+        .note h5 {
+            font-weight: 700;
+            font-family: sans-serif;
+        }
+        .note p {
+           text-align: left;
+           font-size: 20px;
+            font-weight: 700;
+            font-family: sans-serif;
+            color: crimson;
+        }
     </style>
 </head>
 
@@ -27,13 +46,14 @@
             <div class="row content">
                 @include('components.sidebar')
                 <div class="well">
-                    <h3>Balance Report</h3>
+                    <h3>Monthly Balance Report</h3>
                 </div>
-                <div>
-                    <h4>
+                <div class="note">
+                    <p>Important:</p>
+                    <h5>
                         To generate the monthly report for any given month, you should collect all the daily reports generated prior to that month. <br>
                         <span>EG: For March monthly report, you need to generate all the daily reports that were generated before the month of March.</span>
-                    </h4    >
+                    </h5>
                 </div>
                 <div id="app" style="width: 100%">
                     <div class="container" style="width: 100%">
@@ -86,7 +106,7 @@
                                         <a href="{{ route('balance.exportPDF', ['month' => $month,'year' => $year]) }}"
                                             class="btn btn-danger">Export to PDF</a>
                                     </div>
-                                    {{$previousDate}}
+                                  
                                     @if ($income || $expence || $salary)
 
                                         <table class="table table-responsive table-bordered table-stripped"

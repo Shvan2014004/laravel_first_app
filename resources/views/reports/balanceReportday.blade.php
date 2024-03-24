@@ -27,7 +27,7 @@
             <div class="row content">
                 @include('components.sidebar')
                 <div class="well">
-                    <h3>Balance Report</h3>
+                    <h3>Daily Balance Report</h3>
                 </div>
                 <div id="app" style="width: 100%">
                     <div class="container" style="width: 100%">

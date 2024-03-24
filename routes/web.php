@@ -38,19 +38,19 @@ Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
 Route::post('/income',  [IncomeController::class,'store'])->name('income.store');
 Route::delete('/income/{id}',[IncomeController::class,'destroy'])->name('income.destroy');
 Route::match(['get', 'put'], '/income/{id}', [IncomeController::class,'update'])->name('income.update');
-Route::get('/filterIncome', [IncomeController::class, 'filterByMonth'])->name('income.filterByMonth');
+Route::get('/incomeMonthlyReport', [IncomeController::class, 'filterByMonth'])->name('income.filterByMonth');
 Route::get('/exports/csv', [IncomeController::class, 'exportToCSV'])->name('income.exportCSV');
 Route::get('/exports/pdf',  [IncomeController::class,'exportToPDF'])->name('income.exportPDF');
-Route::get('/filter-by-date-rangeIncome', [IncomeController::class,'filterByDateRange'])->name('income.filterByDateRange');
+Route::get('/incomeDailyReport', [IncomeController::class,'filterByDateRange'])->name('income.filterByDateRange');
 
 Route::get('expence', [ExpencesController::class,'index'])->name('expence.index');
 Route::post('/expence',  [ExpencesController::class,'store'])->name('expence.store');
 Route::delete('/expence/{id}',[ExpencesController::class,'destroy'])->name('expence.destroy');
 Route::match(['get', 'put'], '/expence/{id}', [ExpencesController::class,'update'])->name('expence.update');
-Route::get('/filter', [ExpencesController::class, 'filterByMonth'])->name('expence.filterByMonth');
+Route::get('/expenceMonthlyReport', [ExpencesController::class, 'filterByMonth'])->name('expence.filterByMonth');
 Route::get('/export/csv', [ExpencesController::class,'exportToCSV'])->name('expence.exportCSV');
 Route::get('/export/pdf',  [ExpencesController::class,'exportToPDF'])->name('expence.exportPDF');
-Route::get('/filter-by-date-range', [ExpencesController::class,'filterByDateRange'])->name('expence.filterByDateRange');
+Route::get('/expenceDailyReport', [ExpencesController::class,'filterByDateRange'])->name('expence.filterByDateRange');
 
 Route::get('/salary', [SalaryController::class, 'create'])->name('salary.create');
 Route::get('/dashboard', SalaryController::class .'@store')->name('salary.store');
