@@ -26,7 +26,7 @@
     <center>
     <h2>
         @if (isset($month))
-            Monthly Expense Report - Month: {{ $monthName }}
+            Monthly Expense Report - Month: {{ $monthName }}- {{ $year }}
         @elseif(isset($startDate) && isset($endDate))
             Annual Expense Report - Date From: {{ $startDate }} to {{ $endDate }}
         @endif

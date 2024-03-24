@@ -102,7 +102,7 @@
                             </tr>
                         </table>
                         @else
-                            <p>No records found.</p>
+                            <h2>No records found.</h2>
                         @endif
                     </div>
                 </div>

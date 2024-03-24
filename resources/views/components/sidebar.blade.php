@@ -68,7 +68,7 @@
         }
 
         .menu:hover {
-            color: blue!important;
+            color: #41C9E2!important;
             
         }
 
@@ -109,17 +109,17 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-container" style="margin: 10px;">
-                        <a href="{{ route('income.filterByDateRange') }}" style="font-size:19px;">Income</a>
-                        <a href="{{ route('expence.filterByDateRange') }}" style="font-size:19px;">Expense</a>
-                        <a href="{{ route('balance.daily') }}" style="font-size:19px;">Balance Sheet</a>
+                        <a class="menu" href="{{ route('income.filterByDateRange') }}" style="font-size:19px;">Income</a>
+                        <a class="menu" href="{{ route('expence.filterByDateRange') }}" style="font-size:19px;">Expense</a>
+                        <a class="menu" href="{{ route('balance.daily') }}" style="font-size:19px;">Balance Sheet</a>
                     </div>
                     <button class="dropdown-btn">Monthly Reports
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-container" style="margin: 10px">
-                        <a href="{{ route('income.filterByMonth') }}" style="font-size:19px;">Income</a>
-                        <a href="{{ route('expence.filterByMonth') }}" style="font-size:19px;">Expense</a>
-                        <a href="{{ route('balance.filterByMonth') }}" style="font-size:19px;">Balance Sheet</a>
+                        <a class="menu" href="{{ route('income.filterByMonth') }}" style="font-size:19px;">Income</a>
+                        <a class="menu" href="{{ route('expence.filterByMonth') }}" style="font-size:19px;">Expense</a>
+                        <a class="menu" href="{{ route('balance.filterByMonth') }}" style="font-size:19px;">Balance Sheet</a>
                     </div>
 
                 </div>

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
         .row.content {
@@ -26,25 +27,47 @@
                 height: auto;
             }
         }
+
+        .heading {
+            background-color: #337ab7 !important;
+        }
+
+        .box {
+            background-color: #41C9E2 !important;
+        }
+
+        .heading h3 {
+            text-transform: uppercase;
+            color: white !important;
+            margin: 0 !important;
+        }
+        /* #myChart{
+            height: 300px!important;
+            width: 400px!important;
+        } */
     </style>
 </head>
 
 <body>
     @if (Route::has('login'))
-    <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-        @auth
-            <a href="{{ url('/login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Logout</a>
-        @else
-            
-        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
+        <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+            @auth
+                <a href="{{ url('/login') }}"
+                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Logout</a>
+            @else
+                <a href="{{ route('login') }}"
+                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
+                    in</a>
 
-        <a href="{{ route('logout   ') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Logout</a>
-            @if (Route::has('register'))
-                <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-            @endif
-        @endauth
-    </div>
-@endif
+                <a href="{{ route('logout   ') }}"
+                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Logout</a>
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}"
+                        class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                @endif
+            @endauth
+        </div>
+    @endif
     <nav class="navbar navbar-inverse visible-xs">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -70,8 +93,8 @@
         <div class="container-fluid">
             <div class="row content">
                 @include('components.sidebar')
-                <div class="well">
-                    <h4>TS3 Enterprises Accounts Dashboard</h4>
+                <div class="well heading">
+                    <h3>TS3 Enterprises Accounts Analysis</h3>
                 </div>
                 <div id="app" style="width: 100%">
                     <div class="container" style="width: 100%">
@@ -81,35 +104,46 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <div class="well">
+                                            <div class="well box">
                                                 <h4>Income</h4>
-                                                <b><h3>{{App\Models\Income::sum('amount')}}</h3></b>
+                                                <b>
+                                                    <h3>Rs. {{ App\Models\Income::sum('amount') }}</h3>
+                                                </b>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <div class="well">
+                                            <div class="well box">
                                                 <h4>Expences</h4>
-                                                <b><h3>{{App\Models\Expence::sum('amount')}}</h3></b>
+                                                <b>
+                                                    <h3>Rs. {{ App\Models\Expence::sum('amount') }}</h3>
+                                                </b>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <div class="well">
+                                            <div class="well box">
                                                 <h4>Today Debit</h4>
-                                                <b><h3>{{App\Models\Income::where('date', '=',today())->sum('amount')}}</h3></b>
+                                                <b>
+                                                    <h3>Rs.
+                                                        {{ App\Models\Income::where('date', '=', today())->sum('amount') }}
+                                                    </h3>
+                                                </b>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <div class="well">
+                                            <div class="well box">
                                                 <h4>Today Credit</h4>
-                                                <b><h3>{{App\Models\Expence::where('date', '=',today())->sum('amount')}}</h3></b>
+                                                <b>
+                                                    <h3>Rs.
+                                                        {{ App\Models\Expence::where('date', '=', today())->sum('amount') }}
+                                                    </h3>
+                                                </b>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
+                        
 
 </body>
 
