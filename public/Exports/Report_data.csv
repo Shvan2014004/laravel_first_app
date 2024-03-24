@@ -1,7 +1,7 @@
 Date,Description,Credit,Debit
 Income
 Assets
-B/F,0
+B/F,10000
 Expense
 Total,,0,0
-Balance,,,0
+Balance,,10000,

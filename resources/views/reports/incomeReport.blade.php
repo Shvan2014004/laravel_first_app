@@ -114,11 +114,11 @@
                                                                 </tr>
                                                             @endforeach
                                                         @endif
-                                                        <tr style="border: 2px solid black; font-weight: bold;">
-                                                            <th colspan="3"
-                                                                style="text-align: center;border: 2px solid black;">
+                                                        <tr>
+                                                            <th colspan="3">
+                                                                
                                                                 Total</th>
-                                                            <th style="border: 2px solid black;">{{ $total }}
+                                                            <th style="border-style: double black;">{{ $total }}
                                                             </th>
                                                             <th></th>
                                                         </tr>

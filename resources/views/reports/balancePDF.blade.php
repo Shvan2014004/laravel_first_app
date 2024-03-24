@@ -23,20 +23,20 @@
 </head>
 
 <body>
-        <center>
-            <div>
-                <img src="{{ asset('images/logo.jpeg') }}" alt="Logo" height="100" width="100">
-    <h1>TS3 Enterprises - Accounts</h1>
-    
-    <h3>
-        @if (isset($month))
-            Monthly Balance Report - Month: {{ $monthName }}
-        @elseif(isset($date))
-            Balance Report : {{ $date }}
-        @endif
-    </h3>
-            </div>
-</center>
+    <center>
+        <div>
+            <img src="{{ asset('images/logo.jpeg') }}" alt="Logo" height="100" width="100">
+            <h1>TS3 Enterprises - Accounts</h1>
+
+            <h3>
+                @if (isset($month))
+                    Monthly Balance Report - Month: {{ $monthName }}
+                @elseif(isset($date))
+                    Balance Report : {{ $date }}
+                @endif
+            </h3>
+        </div>
+    </center>
     <table class="table table-responsive table-bordered table-stripped" style="margin-top:10px;">
         <tr>
             <th>Date</th>
@@ -45,29 +45,29 @@
             <th>Credit</th>
         </tr>
         @if (isset($month))
-        <tr>
-            <td></td>
-            <td>B/F</td>
-            @if ($bf>0)
-            <td>{{ $bf }}</td>
-            <td></td>  
-            @else
-            <td></td>
-            <td>{{ $bf }}</td>              
-            @endif
-        </tr>
+            <tr>
+                <td></td>
+                <td>B/F</td>
+                @if ($bf > 0)
+                    <td>{{ $bf }}</td>
+                    <td></td>
+                @else
+                    <td></td>
+                    <td>{{ $bf }}</td>
+                @endif
+            </tr>
         @elseif(isset($date))
-        <tr>
-            <td>{{ $date }}</td>
-            <td>B/F</td>
-            @if ($bf>0)
-            <td>{{ $bf }}</td>
-            <td></td>  
-            @else
-            <td></td>
-            <td>{{ $bf }}</td>              
-            @endif
-        </tr>
+            <tr>
+                <td>{{ $date }}</td>
+                <td>B/F</td>
+                @if ($bf > 0)
+                    <td>{{ $bf }}</td>
+                    <td></td>
+                @else
+                    <td></td>
+                    <td>{{ $bf }}</td>
+                @endif
+            </tr>
         @endif
         @if (!$isIncome)
             <tr>

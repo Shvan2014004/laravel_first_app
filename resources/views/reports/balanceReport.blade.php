@@ -63,14 +63,27 @@
                                             </option>
 
                                         </select>
+                                        <label for="year">Select a year:</label>
+                                            <select name="year" id="year">
+                                                @php
+                                                    $currentYear = date('Y');
+                                                    $startYear = $currentYear - 10; // You can adjust this value as per your requirements
+                                                    $endYear = $currentYear + 10; // You can adjust this value as per your requirements
+                                                @endphp
+                                                @for ($i = $startYear; $i <= $endYear; $i++)
+                                                    <option value="{{ $i }}"
+                                                        {{ $year == $i ? 'selected' : '' }}>{{ $i }}
+                                                    </option>
+                                                @endfor
+                                            </select>
                                         <button class="btn btn-primary" type="submit">Filter</button>
                                     </form>
                                     <div style="margin-top: 10px;">
                                         <!-- Buttons for exporting data -->
-                                        <a href="{{ route('balance.exportCSV', ['month' => $month]) }}"
+                                        <a href="{{ route('balance.exportCSV', ['month' => $month,'year' => $year]) }}"
                                             class="btn btn-primary">Export to CSV</a>
 
-                                        <a href="{{ route('balance.exportPDF', ['month' => $month]) }}"
+                                        <a href="{{ route('balance.exportPDF', ['month' => $month,'year' => $year]) }}"
                                             class="btn btn-danger">Export to PDF</a>
                                     </div>
                                     {{$previousDate}}
