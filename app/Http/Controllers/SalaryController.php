@@ -55,7 +55,7 @@ class SalaryController extends Controller
         $salary = Salary::create($request->all());
 
         if ($salary) {
-            return redirect('/salary')->with('success', 'Success');
+            return redirect('/salary')->with('success', 'Salary data successfully added');
         } else {
             return back()->withInput()->with('error', 'Failed to save data');
         }

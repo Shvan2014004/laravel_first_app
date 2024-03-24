@@ -42,7 +42,7 @@ class ExpencesController extends Controller {
         $expence = Expence::create( $request->all() );
 
         if ( $expence ) {
-            return redirect( '/expence' )->with( 'success', 'Success' );
+            return redirect( '/expence' )->with( 'success', 'Expense data successfully sdded' );
         } else {
             return back()->withInput()->with( 'error', 'Failed to save data' );
         }

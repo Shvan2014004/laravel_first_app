@@ -7,6 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <title>Report</title>
+    <style>
+        .well {
+            background-color: #337ab7 !important;
+        }
+
+        .well h3 {
+            text-transform: uppercase;
+            color: white !important;
+            margin: 0 !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,7 +27,7 @@
             <div class="row content">
                 @include('components.sidebar')
                 <div class="well">
-                    <h4>TS3 Enterprises Accounts Dashboard</h4>
+                    <h3>Balance Report</h3>
                 </div>
                 <div id="app" style="width: 100%">
                     <div class="container" style="width: 100%">
@@ -24,7 +35,7 @@
                         <div class="col-md-8" style="width: 100%">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <h1>Daily Report</h1>
+                                    <h3>Daily Report</h3>
 
                                     <form method="GET" action="{{ route('balance.daily') }}">
                                         <div class="row">

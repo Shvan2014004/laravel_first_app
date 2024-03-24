@@ -9,6 +9,22 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        .create-expence {
+            padding: 8px 9px !important;
+            margin-bottom: 8px !important;
+        }
+
+        .well {
+            background-color: #337ab7 !important;
+        }
+
+        .well h3 {
+            text-transform: uppercase;
+            color: white !important;
+            margin: 0 !important;
+        }
+    </style>
 </head>
 
 <body style="background: #ddd;">
@@ -16,7 +32,7 @@
         <div class="row content">
             @include('components.sidebar')
             <div class="well">
-                <h4>Expenses</h4>
+                <h3>Expenses</h3>
             </div>
             <div id="app" style="width: 100%">
                 <div class="container" style="width: 100%">
@@ -25,7 +41,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
 
-                             
+
 
                                 <strong>Expense Information</strong>
                                 @if (session('success'))
@@ -39,7 +55,7 @@
                                         {{ session('error') }}
                                     </div>
                                 @endif
-                                <a class="btn btn-primary btn-xs pull-right py-0" data-toggle="modal"
+                                <a class="btn btn-primary btn-xs pull-right py-0 create-expence" data-toggle="modal"
                                     data-target="#myModal">Create Expence</a>
                                 <table class="table table-responsive table-bordered table-stripped"
                                     style="margin-top:10px;">
@@ -138,18 +154,18 @@
                                                 <option value="Bank">Bank</option>
                                             </select>
                                         </div>
+                                        <div class="modal-footer">
 
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="reset" class="btn btn-primary"
-                                            onclick="resetForm()">Reset</button>
-                                        <button type="button" class="btn btn-primary"
-                                            data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="reset" class="btn btn-primary"
+                                                onclick="resetForm()">Reset</button>
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
+
                                     </form>
                                 </div>
-                                <div class="modal-footer">
 
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -192,19 +208,17 @@
                                                 <option value="Bank">Bank</option>
                                             </select>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <div class="modal-footer">
 
-                                        <button type="button" class="btn btn-primary"
-                                            data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="reset" class="btn btn-primary"
+                                                onclick="resetForm()">Reset</button>
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
                                     </form>
                                 </div>
-                                <div class="modal-footer">
-
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-
-                                    <button type="button" class="btn btn-primary"
-                                        data-dismiss="modal">Close</button>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

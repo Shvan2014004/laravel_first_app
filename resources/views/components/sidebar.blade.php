@@ -15,14 +15,15 @@
             background-color: #ebecead7;
             height: 100%;
             width: 200px;
-            position: fixed;;
+            position: fixed;
+            ;
             z-index: 1;
             top: 0;
             left: 0;
             overflow-x: hidden;
             padding-top: 20px;
             float: left;
-            display:inline;
+            display: inline;
         }
 
         /* Style the sidenav links and the dropdown button */
@@ -59,6 +60,18 @@
             font-size: 18px;
         }
 
+        .logo {
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+        }
+
+        .menu:hover {
+            color: blue!important;
+            
+        }
+
         /* On small screens, set height to 'auto' for the grid */
         @media screen and (max-width: 767px) {
             .row.content {
@@ -72,12 +85,12 @@
 
 
     <div class="col-sm-3 sidenav hidden-xs" style="width: 15%">
-        <img src="{{ asset('images/logo.jpeg') }}" alt="logo" height="100" width="100">
+        <img src="{{ asset('images/logo.jpeg') }}" class="logo" height="100" width="100">
         <ul class="nav nav-pills nav-stacked">
             <li class="active"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li><a href="{{ route('income.index') }}">Income</a></li>
-            <li><a href="{{ route('expence.store') }}">Expenses</a></li>
-            <li><a href="{{ route('salary.store') }}">Salary</a></li>
+            <li><a class="menu" href="{{ route('income.index') }}">Income</a></li>
+            <li><a class="menu" href="{{ route('expence.store') }}">Expenses</a></li>
+            <li><a class="menu" href="{{ route('salary.store') }}">Salary</a></li>
             {{-- <li><button class="dropdown-btn">Assets
                     <i class="fa fa-caret-down"></i>
                 </button>
@@ -96,19 +109,19 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-container" style="margin: 10px;">
-                        <a href="{{route('income.filterByDateRange')}}" style="font-size:19px;">Income</a>
-                        <a href="{{route('expence.filterByDateRange')}}" style="font-size:19px;">Expense</a>
-                        <a href="{{route('balance.daily')}}" style="font-size:19px;">Balance Sheet</a>
+                        <a href="{{ route('income.filterByDateRange') }}" style="font-size:19px;">Income</a>
+                        <a href="{{ route('expence.filterByDateRange') }}" style="font-size:19px;">Expense</a>
+                        <a href="{{ route('balance.daily') }}" style="font-size:19px;">Balance Sheet</a>
                     </div>
                     <button class="dropdown-btn">Monthly Reports
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-container" style="margin: 10px">
-                        <a href="{{route('income.filterByMonth')}}" style="font-size:19px;">Income</a>
-                        <a href="{{route('expence.filterByMonth')}}" style="font-size:19px;">Expense</a>
-                        <a href="{{route('balance.filterByMonth')}}" style="font-size:19px;">Balance Sheet</a>
+                        <a href="{{ route('income.filterByMonth') }}" style="font-size:19px;">Income</a>
+                        <a href="{{ route('expence.filterByMonth') }}" style="font-size:19px;">Expense</a>
+                        <a href="{{ route('balance.filterByMonth') }}" style="font-size:19px;">Balance Sheet</a>
                     </div>
-                   
+
                 </div>
             </li>
         </ul><br>

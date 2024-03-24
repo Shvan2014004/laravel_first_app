@@ -8,6 +8,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        .well {
+               background-color: #337ab7 !important;
+           }
+   
+           .well h3 {
+               text-transform: uppercase;
+               color: white !important;
+               margin: 0 !important;
+           }
+   </style>
 </head>
 
 <body style="background: #ddd;">
@@ -18,7 +29,7 @@
                 <div class="row content">
                     @include('components.sidebar')
                     <div class="well">
-                        <h4>TS3 Enterprises Accounts Dashboard</h4>
+                        <h3>Income Report</h3>
                     </div>
                     <div id="app" style="width: 100%">
                         <div class="container" style="width: 100%">
@@ -26,7 +37,7 @@
                             <div class="col-md-8" style="width: 100%">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
-                                        <h1>Income Report</h1>
+                                        <h3>Income Report for Specified Date Range</h3>
                                         <form method="GET" action="{{ route('income.filterByDateRange') }}">
                                             <div class="row">
                                                 <div class="col-md-5">
@@ -85,18 +96,16 @@
                                                             </tr>
                                                         @endforeach
                                                     @endif
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <th>Total</th>
-                                                        <th>{{ $total }}</th>
+                                                    <tr style="border: 2px solid black; font-weight: bold;">
+                                                       <th colspan="3" style="text-align: center;border: 2px solid black;" >Total</th>
+                                                        <th style="border: 2px solid black;">{{ $total }}</th>
                                                         <th></th>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         @else
                                         <Center>
-                                            <p>No records found.</p>
+                                            <h2>No records found.</h2>
                                         </Center>
                                         @endif
                                         @endif
