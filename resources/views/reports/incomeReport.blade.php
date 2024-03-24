@@ -8,8 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<style>
-     .well {
+    <style>
+        .well {
             background-color: #337ab7 !important;
         }
 
@@ -18,7 +18,7 @@
             color: white !important;
             margin: 0 !important;
         }
-</style>
+    </style>
 </head>
 
 <body style="background: #ddd;">
@@ -64,14 +64,28 @@
                                                 </option>
 
                                             </select>
-                                            <button class="btn btn-primary" style="margin-left: 20px;" type="submit">Filter</button>
+                                            <label for="year">Select a year:</label>
+                                            <select name="year" id="year">
+                                                @php
+                                                    $currentYear = date('Y');
+                                                    $startYear = $currentYear - 10; // You can adjust this value as per your requirements
+                                                    $endYear = $currentYear + 10; // You can adjust this value as per your requirements
+                                                @endphp
+                                                @for ($i = $startYear; $i <= $endYear; $i++)
+                                                    <option value="{{ $i }}"
+                                                        {{ $year == $i ? 'selected' : '' }}>{{ $i }}
+                                                    </option>
+                                                @endfor
+                                            </select>
+                                            <button class="btn btn-primary" style="margin-left: 20px;"
+                                                type="submit">Filter</button>
                                         </form>
                                         <div style="margin-top: 10px;">
                                             <!-- Buttons for exporting data -->
-                                            <a href="{{ route('income.exportCSV', ['month' => $month]) }}"
+                                            <a href="{{ route('income.exportCSV', ['month' => $month, 'year' => $year]) }}"
                                                 class="btn btn-primary">Export to CSV</a>
-
-                                            <a href="{{ route('income.exportPDF', ['month' => $month]) }}"
+                                            
+                                            <a href="{{ route('income.exportPDF', ['month' => $month, 'year' => $year]) }}"
                                                 class="btn btn-danger">Export to PDF</a>
                                         </div>
                                         @if ($month != null)
@@ -101,15 +115,18 @@
                                                             @endforeach
                                                         @endif
                                                         <tr style="border: 2px solid black; font-weight: bold;">
-                                                            <th colspan="3" style="text-align: center;border: 2px solid black;" >Total</th>
-                                                             <th style="border: 2px solid black;">{{ $total }}</th>
-                                                             <th></th>
+                                                            <th colspan="3"
+                                                                style="text-align: center;border: 2px solid black;">
+                                                                Total</th>
+                                                            <th style="border: 2px solid black;">{{ $total }}
+                                                            </th>
+                                                            <th></th>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             @else
                                                 <center>
-                                                    <p>No records found.</p>
+                                                    <h2>No records found.</h2>
                                                 </center>
                                             @endif
                                         @endif

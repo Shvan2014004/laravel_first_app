@@ -26,7 +26,7 @@
     <center>
     <h2>
         @if (isset($month))
-            Monthly Income Report - Month: {{ $monthName }}
+            Monthly Income Report - Month: {{ $monthName }} - {{ $year }}
         @elseif(isset($startDate) && isset($endDate))
             Income Report - Date From: {{ $startDate }} to: {{ $endDate }}
         @endif

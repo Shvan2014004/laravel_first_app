@@ -84,15 +84,19 @@ class IncomeController extends Controller
     public function filterByMonth(Request $request)
     {
         $month = $request->input('month');
-        $filteredData = Income::whereMonth('date', '=', $month)->get();
+        $year = $request->input('year'); // Assuming year is also provided in the request
+        $filteredData = Income::whereYear('date', '=', $year)
+                              ->whereMonth('date', '=', $month)
+                              ->get();
         $total = $filteredData->sum('amount');
         $n = 1;
         $dateTime = new DateTime();
-        $dateTime->setDate(date('Y'), $month, 1); // Set the year and month
+        $dateTime->setDate($year, $month, 1); // Set the year and month
         $monthName = $dateTime->format('F');
-        return view('reports/incomeReport', compact(
+        return view('reports.incomeReport', compact(
             'filteredData',
             'month',
+            'year',
             'total',
             'n',
             'monthName'
@@ -104,12 +108,13 @@ class IncomeController extends Controller
     {
 
         $month = $request->input('month');
+        $year = $request->input('year');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
         $n = 1;
-        if ($month) {
-            $filteredData = Income::whereMonth('date', '=', $month)->get();
+        if ($month&&$year) {
+            $filteredData = Income::whereYear('date', $year)->whereMonth('date', $month)->get();
         } else {
 
             $filteredData = Income::whereBetween('date', [$startDate, $endDate])->get();
@@ -137,7 +142,7 @@ class IncomeController extends Controller
     public function exportToPDF(Request $request)
     {
         $month = $request->input('month');
-
+        $year = $request->input('year');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         $n = 1;
@@ -145,10 +150,10 @@ class IncomeController extends Controller
         $dateTime->setDate(date('Y'), $month, 1); // Set the year and month
         $monthName = $dateTime->format('F');
 
-        if ($month) {
-            $filteredData = Income::whereMonth('date', '=', $month)->get();
+        if ($month && $year) {
+            $filteredData = Income::whereYear('date', $year)->whereMonth('date', '=', $month)->get();
             $total = $filteredData->sum('amount');
-            $html = view('reports.incomePDF', compact('filteredData', 'month', 'n', 'total', 'monthName'))->render();
+            $html = view('reports.incomePDF', compact('filteredData', 'month','year', 'n', 'total', 'monthName'))->render();
         } else {
 
             $filteredData = Income::whereBetween('date', [$startDate, $endDate])->get();
@@ -172,8 +177,8 @@ class IncomeController extends Controller
         if ($month >= 1 && $month <= 12) {
             $dateTime = new DateTime();
             $dateTime->setDate(date('Y'), $month, 1); // Set the year and month
-            $monthName = $dateTime->format('F'); // Get the month name
-            $filename = $name . $monthName;
+            $monthName = $dateTime->format('F');            
+            $filename = $name . $monthName . '_' . $year;
         } else {
             $filename = $name . $startDate . " to " . $endDate;
         }
