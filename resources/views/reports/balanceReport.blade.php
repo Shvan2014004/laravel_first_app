@@ -29,6 +29,12 @@
                 <div class="well">
                     <h3>Balance Report</h3>
                 </div>
+                <div>
+                    <h4>
+                        To generate the monthly report for any given month, you should collect all the daily reports generated prior to that month. <br>
+                        <span>EG: For March monthly report, you need to generate all the daily reports that were generated before the month of March.</span>
+                    </h4    >
+                </div>
                 <div id="app" style="width: 100%">
                     <div class="container" style="width: 100%">
                         <div class="col-md-2"></div>
@@ -67,6 +73,7 @@
                                         <a href="{{ route('balance.exportPDF', ['month' => $month]) }}"
                                             class="btn btn-danger">Export to PDF</a>
                                     </div>
+                                    {{$previousDate}}
                                     @if ($income || $expence || $salary)
 
                                         <table class="table table-responsive table-bordered table-stripped"

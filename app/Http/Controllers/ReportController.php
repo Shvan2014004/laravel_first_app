@@ -41,13 +41,25 @@ class ReportController extends Controller
         $sumexpence = $expence->sum('amount') + $salary->sum('netsalary');
         $sumincome = $income->sum('amount');
 
-
-        $previousMonth = ($month == 1) ? 12 : ($month - 1);
-        $bfincome = Income::whereMonth('date', '=', $previousMonth)->sum('amount');
-        $bfexpence = Expence::whereMonth('date', '=', $previousMonth)->sum('amount');
-        $bfsalary = Salary::whereMonth('salary_date', '=', $previousMonth)->sum('netsalary');
-
-        $bf = $bfincome - ($bfexpence + $bfsalary);
+$monthString = strtotime($monthName);
+$previousMonthDate = strtotime('-1 month', $monthString);
+$previousMonth = date('F', $previousMonthDate);
+        // $previousMonth = ($month == 1) ? 12 : ($month - 1);
+        // $bfincome = Income::whereMonth('date', '=', $previousMonth)->sum('amount');
+        // $bfexpence = Expence::whereMonth('date', '=', $previousMonth)->sum('amount');
+        // $bfsalary = Salary::whereMonth('salary_date', '=', $previousMonth)->sum('netsalary');
+        $year='2024';
+        $dateString = strtotime($previousMonth . ' ' . $year);
+        $previousDate = date("Y-m-t", $dateString);
+// Retrieve the balance data for the previous month
+$rbf = Balance::where('date', '=', $previousDate)->first();
+// dd($rbf);
+// Calculate the beginning balance
+$bf = $rbf ? $rbf->balance:0;
+// dd($bf);
+        // $rbf = Balance::where('date','=',$previousDate)->get();
+        // dd($rbf);
+// $bf=$rbf->value('balance');
         $balance = $bf + $sumincome - $sumexpence;
         return (view('reports.balanceReport', compact(
             'income',
@@ -63,7 +75,8 @@ class ReportController extends Controller
             'sumincome',
             'sumexpence',
             'bf',
-            'monthName'
+            'monthName',
+            'previousDate'
 
         )));
     }
@@ -88,10 +101,10 @@ class ReportController extends Controller
     
         $calbf = Balance::where('date', '=', $previousDate)->value('balance');
         $storebf=Balance::where('date','=',$date)->get();
-    
+    $bf=0;
         // Check if $date is null
         if ($date) {
-            // if ($calbf) {
+            // if ($calbf==!null) {
             //     $bf=0;
             //     $balance = $bf + $sumincome - $sumexpence;
             //     // Create a new balance record
@@ -112,7 +125,7 @@ class ReportController extends Controller
     
         // $bf = $this->balanceCalc($request); // Call balanceCalc with $request parameter
     
-        // $balance = $bf + $sumincome - $sumexpence;
+        $balance = $bf + $sumincome - $sumexpence;
     
         return view('reports.balanceReportday', compact(
             'income',
