@@ -1,3 +1,8 @@
 ID,Date,Description,Amount,Type
-1,2024-03-04,test,5000,Cash
-2,2024-03-04,test,5000,Cash
+1,2024-03-04,new,1000,Cheque
+2,2024-03-05,fun,166,Cash
+3,2024-03-09,june,12,Cash
+4,2024-03-07,fdgf,456,Cash
+5,2024-03-23,"test cashhh",444,Bank
+6,2024-03-23,edited,2,Cheque
+7,2024-03-23,new,1000,Cash

@@ -9,6 +9,23 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        .create-salary {
+            padding: 8px 9px !important;
+            margin-bottom: 8px !important;
+        }
+
+        .well {
+            background-color: #337ab7 !important;
+        }
+
+        .well h3 {
+            text-transform: uppercase;
+            color: white !important;
+            margin: 0 !important;
+        }
+    </style>
+
 </head>
 
 <body style="background: #ddd;">
@@ -16,7 +33,7 @@
         <div class="row content">
             @include('components.sidebar')
             <div class="well">
-                <h4>Salary</h4>
+                <h3>Salary</h3>
             </div>
             <div id="app" style="width: 100%">
                 <div class="container" style="width: 100%">
@@ -38,7 +55,7 @@
                                         {{ session('error') }}
                                     </div>
                                 @endif
-                                <a class="btn btn-primary btn-xs pull-right py-0" data-toggle="modal"
+                                <a class="btn btn-primary btn-xs pull-right py-0 create-salary" data-toggle="modal"
                                     data-target="#myModal">Create Salary</a>
                                 <table class="table table-responsive table-bordered table-stripped"
                                     style="margin-top:10px;">

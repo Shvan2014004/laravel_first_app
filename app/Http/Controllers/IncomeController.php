@@ -50,7 +50,7 @@ class IncomeController extends Controller
         $income = Income::create($request->all());
 
         if ($income) {
-            return redirect('/income')->with('success', 'Success');
+            return redirect('/income')->with('success', 'Income data successfully added');
         } else {
             return back()->withInput()->with('error', 'Failed to save data');
         }
@@ -116,7 +116,7 @@ class IncomeController extends Controller
         }
         $total = $filteredData->sum('amount');
         // Write data to CSV file
-        $csvFileName = 'income_data.csv';
+        $csvFileName = 'Income_Report .csv';
         $csvFile = fopen(public_path('exports/' . $csvFileName), 'w');
 
         // Write header
