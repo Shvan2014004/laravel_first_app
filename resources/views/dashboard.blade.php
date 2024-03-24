@@ -35,8 +35,10 @@
         @auth
             <a href="{{ url('/login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Logout</a>
         @else
-            <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
+            
+        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
 
+        <a href="{{ route('logout   ') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Logout</a>
             @if (Route::has('register'))
                 <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
             @endif
@@ -92,14 +94,14 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="well">
-                                                <h4>Payable</h4>
-                                                <p>Fetch data from expense report filterd by payable(sum)</p>
+                                                <h4>Today Debit</h4>
+                                                <b><h3>{{App\Models\Income::where('date', '=',today())->sum('amount')}}</h3></b>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="well">
-                                                <h4>Credit</h4>
-                                                <p>Fetch data from income report filterd by credit(sum)</p>
+                                                <h4>Today Credit</h4>
+                                                <b><h3>{{App\Models\Expence::where('date', '=',today())->sum('amount')}}</h3></b>
                                             </div>
                                         </div>
                                     </div>

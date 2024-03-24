@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assets;
+use App\Models\Balance;
 use App\Models\Income;
 use App\Models\Salary;
 use App\Models\Expence;
@@ -12,6 +13,8 @@ use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Month;
+
+use function PHPUnit\Framework\isNull;
 
 class ReportController extends Controller
 {
@@ -64,40 +67,57 @@ class ReportController extends Controller
 
         )));
     }
-
-    public function filterByDate(Request $request)
-    {
+    
+    public function filterByDate(Request $request) {
         $date = $request->input('date');
+
         $income = Income::where('date', '=', $date)->get();
         $expence = Expence::where('date', '=', $date)->get();
         $salary = Salary::where('salary_date', '=', $date)->get();
-        // $subcategory = Subcategory::where( 'date', '=', $month )->get();
-        // $category = Category::where( 'date', '=', $month )->get();
-        // $assets = Assets::where( 'date', '=', $month )->get();
-        // $isAssets = $assets->isEmpty();
-        $isIncome = $income->isEmpty();
-        $isExpence = $expence->isEmpty();
-        $isSalary = $salary->isEmpty();
 
         $sumexpence = $expence->sum('amount') + $salary->sum('netsalary');
         $sumincome = $income->sum('amount');
 
-
+        $isIncome = $income->isEmpty();
+        $isExpence = $expence->isEmpty();
+        $isSalary = $salary->isEmpty();
+    
         $previousDate = new DateTime($date);
         $previousDate->modify('-1 day');
         $previousDate = $previousDate->format('Y-m-d');
-        $bfincome = Income::where('date', '=', $previousDate)->sum('amount');
-        $bfexpence = Expence::where('date', '=', $previousDate)->sum('amount');
-        $bfsalary = Salary::where('salary_date', '=', $previousDate)->sum('netsalary');
-
-        $bf = $bfincome - ($bfexpence + $bfsalary);
-        $balance = $bf + $sumincome - $sumexpence;
-        return (view('reports.balanceReportday', compact(
+    
+        $calbf = Balance::where('date', '=', $previousDate)->value('balance');
+        $storebf=Balance::where('date','=',$date)->get();
+    
+        // Check if $date is null
+        if ($date) {
+            // if ($calbf) {
+            //     $bf=0;
+            //     $balance = $bf + $sumincome - $sumexpence;
+            //     // Create a new balance record
+            //     Balance::create([
+            //         'balance' => $balance,
+            //         'date' => $date
+            //     ]);
+            // } else {
+                // Get the balance from the query result
+                $bf=value($calbf);
+                $balance = $bf + $sumincome - $sumexpence;
+                Balance::create([
+                    'balance' => $balance,
+                    'date' => $date
+                ]);
+            // }
+        }
+    
+        // $bf = $this->balanceCalc($request); // Call balanceCalc with $request parameter
+    
+        // $balance = $bf + $sumincome - $sumexpence;
+    
+        return view('reports.balanceReportday', compact(
             'income',
             'expence',
             'salary',
-            // 'assets',
-            // 'isAssets',
             'isIncome',
             'isExpence',
             'date',
@@ -106,9 +126,9 @@ class ReportController extends Controller
             'sumincome',
             'sumexpence',
             'bf'
-
-        )));
+        ));
     }
+    
     // Export data to CSV
 
     public function exportToCSV(Request $request)
