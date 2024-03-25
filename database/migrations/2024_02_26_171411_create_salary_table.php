@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('salary_date');
             $table->string('empolyee_id');
             $table->string('employee_name');
-            $table->double('no_of_workin_days', 3, 2);
+            $table->double('no_of_workin_days', 5, 2);
             $table->double('salary_per_day',8,2);
             $table->double('deduction',8,2);
             $table->double('netsalary',8,2);
