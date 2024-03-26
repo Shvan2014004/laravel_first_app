@@ -1,1 +1,1 @@
-<img src="public\images\logo.jpeg" style="height: 150px; width=150px">
+<img src="{{ asset('images/logo.jpeg') }}" style="height: 100px; width=100px; border-radius: 50%">

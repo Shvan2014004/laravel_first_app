@@ -83,7 +83,7 @@
 </head>
 
 <body>
-
+    @include('components.authSection')
     <div class="col-sm-3 sidenav hidden-xs" style="width: 15%">
         <img src="{{ asset('images/logo.jpeg') }}" class="logo" height="100" width="100">
         <ul class="nav nav-pills nav-stacked">
