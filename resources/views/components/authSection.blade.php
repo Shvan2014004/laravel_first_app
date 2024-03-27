@@ -6,14 +6,19 @@
                 <button type="submit" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 btn btn-primary" style="margin: 15px;">Logout</button>
             </form>
             @else
-                <a href="{{ route('login') }}"
-                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                    in</a>
+            <form method="GET" action="{{ route('login') }}">
+                @csrf
+                <button type="submit" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 btn btn-primary" style="margin: 15px;">Login</button>
+            </form>
+                
                     
                 
                 @if (Route::has('register'))
-                    <a href="{{ route('register') }}"
-                        class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
+                    <button type="submit" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 btn btn-primary" style="margin: 15px;">Register</button>
+                </form>
+                   
                 @endif
             @endauth
         </div>
