@@ -33,6 +33,7 @@
         
     width: 100%;
     }
+  
 }
     </style>
 </head>
@@ -65,8 +66,8 @@
                                         {{ session('error') }}
                                     </div>
                                 @endif
-                                {{-- <a class="btn btn-primary btn-xs pull-right py-0 create-income" data-toggle="modal" 
-                                    data-target="#myModal">Create Income</a> --}}
+                                <a class="btn btn-primary btn-xs py-0 create-income" data-toggle="modal" 
+                                    data-target="#myModal">Create Income</a>
                                     <div class="table-container" style="max-height: 400px; overflow: auto;">
                                 <table class="table table-responsive table-bordered table-stripped"
                                     style="margin-top:10px;">

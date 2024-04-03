@@ -19,6 +19,18 @@
             color: white !important;
             margin: 0 !important;
         }
+
+        @media screen and (max-width: 767px) {
+
+            .pdfBtn,
+            .csvBtn {
+                width: 100%;
+            }
+
+            .csvBtn {
+                margin-bottom: 5px !important;
+            }
+        }
     </style>
 </head>
 
@@ -87,47 +99,51 @@
                                             <div style="margin-top: 10px;">
                                                 <!-- Buttons for exporting data -->
                                                 <a href="{{ route('expence.exportCSV', ['month' => $month, 'year' => $year]) }}"
-                                                    class="btn btn-primary">Export to CSV</a>
+                                                    class="btn btn-primary csvBtn">Export to CSV</a>
 
                                                 <a href="{{ route('expence.exportPDF', ['month' => $month, 'year' => $year]) }}"
-                                                    class="btn btn-danger">Export to PDF</a>
+                                                    class="btn btn-danger pdfBtn">Export to PDF</a>
                                             </div>
                                             @if ($month != null)
                                                 @if (count($filteredData) > 0)
-                                                    <table class="table table-responsive table-bordered table-stripped"
-                                                        style="margin-top:10px;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>Date</th>
-                                                                <th>Description</th>
-                                                                <th>Amount</th>
-                                                                <th>Type</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @if (isset($filteredData) && count($filteredData) > 0)
-                                                                @foreach ($filteredData as $item)
-                                                                    <tr>
-                                                                        <td>{{ $n++ }}</td>
-                                                                        <td>{{ $item->date }}</td>
-                                                                        <td>{{ $item->description }}</td>
-                                                                        <td>{{ $item->amount }}</td>
-                                                                        <td>{{ $item->type }}</td>
+                                                    <div class="table-container"
+                                                        style="max-height: 400px; overflow: auto;">
+                                                        <table
+                                                            class="table table-responsive table-bordered table-stripped"
+                                                            style="margin-top:10px;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Date</th>
+                                                                    <th>Description</th>
+                                                                    <th>Amount</th>
+                                                                    <th>Type</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if (isset($filteredData) && count($filteredData) > 0)
+                                                                    @foreach ($filteredData as $item)
+                                                                        <tr>
+                                                                            <td>{{ $n++ }}</td>
+                                                                            <td>{{ $item->date }}</td>
+                                                                            <td>{{ $item->description }}</td>
+                                                                            <td>{{ $item->amount }}</td>
+                                                                            <td>{{ $item->type }}</td>
 
-                                                                    </tr>
-                                                                @endforeach
-                                                            @endif
-                                                            <tr style="border: 2px solid black; font-weight: bold;">
-                                                                <th colspan="3"
-                                                                    style="text-align: center;border: 2px solid black;">
-                                                                    Total</th>
-                                                                <th style="border: 2px solid black;">
-                                                                    {{ $total }}</th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                @endif
+                                                                <tr style="border: 2px solid black; font-weight: bold;">
+                                                                    <th colspan="3"
+                                                                        style="text-align: center;border: 2px solid black;">
+                                                                        Total</th>
+                                                                    <th style="border: 2px solid black;">
+                                                                        {{ $total }}</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 @else
                                                     <center>
                                                         <h2>No records found.</h2>

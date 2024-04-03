@@ -17,6 +17,18 @@
             color: white !important;
             margin: 0 !important;
         }
+
+        @media screen and (max-width: 767px) {
+
+            .pdfBtn,
+            .csvBtn {
+                width: 100%;
+            }
+
+            .csvBtn {
+                margin-bottom: 5px !important;
+            }
+        }
     </style>
 </head>
 
@@ -36,7 +48,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <h1>Daily Report</h1>
-{{-- @if($bf==null || $bf==0)
+                                    {{-- @if ($bf == null || $bf == 0)
 <div>
     <script>
         // Prompt the user to input balance data
@@ -70,11 +82,11 @@
                                                         name="date" value="{{ $date }}">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-2">
-                                                <button type="submit" class="btn btn-primary"
-                                                    style="margin-top: 25px;" id="filter">Filter</button>
-                                            
+                                                <button type="submit" class="btn btn-primary" style="margin-top: 25px;"
+                                                    id="filter">Filter</button>
+
                                                 {{-- <button type="reset" class="btn btn-primary"
                                                     style="margin-top: 25px; background-color:red;" value="Reset">Reset</button> --}}
                                             </div>
@@ -95,21 +107,22 @@
                                     <div style="margin-top: 10px;">
                                         <!-- Buttons for exporting data -->
                                         <a href="{{ route('balance.exportCSV', ['date' => $date]) }}"
-                                            class="btn btn-primary">Export to CSV</a>
+                                            class="btn btn-primary csvBtn">Export to CSV</a>
 
                                         <a href="{{ route('balance.exportPDF', ['date' => $date]) }}"
-                                            class="btn btn-danger">Export to PDF</a>
+                                            class="btn btn-danger pdfBtn">Export to PDF</a>
                                     </div>
                                     {{-- {{$previousDate}} --}}
-                                    <table class="table table-responsive table-bordered table-stripped"
-                                        style="margin-top:10px;">
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Description</th>
-                                            <th>Debit</th>
-                                            <th>Credit</th>
-                                        </tr>
-                                        {{-- @if (!$isAssets)
+                                    <div class="table-container" style="max-height: 400px; overflow: auto;">
+                                        <table class="table table-responsive table-bordered table-stripped"
+                                            style="margin-top:10px;">
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Description</th>
+                                                <th>Debit</th>
+                                                <th>Credit</th>
+                                            </tr>
+                                            {{-- @if (!$isAssets)
             <tr>
                 <td colspan="4"><b>Assets</b></td>
             </tr>
@@ -122,39 +135,39 @@
                 </tr>
             @endforeach
         @endif --}}
-                                        <tr>
-                                            <td>{{ $date }}</td>
-                                            <td>B/F</td>
-                                            <td>{{ $bf }}</td>
-                                        </tr>
-                                        @if (!$isIncome)
                                             <tr>
-                                                <td colspan="4"><b>Income</b></td>
+                                                <td>{{ $date }}</td>
+                                                <td>B/F</td>
+                                                <td>{{ $bf }}</td>
                                             </tr>
-                                            @foreach ($income as $row)
+                                            @if (!$isIncome)
+                                                <tr>
+                                                    <td colspan="4"><b>Income</b></td>
+                                                </tr>
+                                                @foreach ($income as $row)
+                                                    <tr>
+                                                        <td>{{ $row->date }}</td>
+                                                        <td>{{ $row->description }}</td>
+                                                        <td>{{ $row->amount }}</td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                            {{-- @if (!$isExpence || $isSalary) --}}
+                                            <tr>
+                                                <td colspan="4"><b>Expense</b></td>
+                                            </tr>
+                                            {{-- @endif --}}
+                                            @foreach ($expence as $row)
                                                 <tr>
                                                     <td>{{ $row->date }}</td>
                                                     <td>{{ $row->description }}</td>
-                                                    <td>{{ $row->amount }}</td>
                                                     <td></td>
+                                                    <td>{{ $row->amount }}</td>
                                                 </tr>
                                             @endforeach
-                                        @endif
-                                        {{-- @if (!$isExpence || $isSalary) --}}
-                                        <tr>
-                                            <td colspan="4"><b>Expense</b></td>
-                                        </tr>
-                                        {{-- @endif --}}
-                                        @foreach ($expence as $row)
-                                            <tr>
-                                                <td>{{ $row->date }}</td>
-                                                <td>{{ $row->description }}</td>
-                                                <td></td>
-                                                <td>{{ $row->amount }}</td>
-                                            </tr>
-                                        @endforeach
 
-                                        {{-- @if (!$isSalary)
+                                            {{-- @if (!$isSalary)
                                             @foreach ($salary as $row)
                                                 <tr>
                                                     <td>{{ $row->salary_date }}</td>
@@ -164,29 +177,30 @@
                                                 </tr>
                                             @endforeach
                                         @endif --}}
-                                        @foreach ($salary as $row)
+                                            @foreach ($salary as $row)
+                                                <tr>
+                                                    <td>{{ $row->salary_date }}</td>
+                                                    <td>Salary of {{ $row->employee_name }}</td>
+                                                    <td></td>
+                                                    <td>{{ $row->netsalary }}</td>
+                                                </tr>
+                                            @endforeach
                                             <tr>
-                                                <td>{{ $row->salary_date }}</td>
-                                                <td>Salary of {{ $row->employee_name }}</td>
-                                                <td></td>
-                                                <td>{{ $row->netsalary }}</td>
+                                                <th colspan="2">Total</th>
+                                                <th>{{ $sumincome }}</th>
+                                                <th>{{ $sumexpence }}</th>
                                             </tr>
-                                        @endforeach
-                                        <tr>
-                                            <th colspan="2">Total</th>
-                                            <th>{{ $sumincome }}</th>
-                                            <th>{{ $sumexpence }}</th>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="2">Balance</th>
-                                            @if ($balance > 0)
-                                                <th>{{ $balance }}</th>
-                                            @else
-                                                <th></th>
-                                                <th>{{ $balance }}</th>
-                                            @endif
-                                        </tr>
-                                    </table>
+                                            <tr>
+                                                <th colspan="2">Balance</th>
+                                                @if ($balance > 0)
+                                                    <th>{{ $balance }}</th>
+                                                @else
+                                                    <th></th>
+                                                    <th>{{ $balance }}</th>
+                                                @endif
+                                            </tr>
+                                        </table>
+                                    </div>
 </body>
 
 </html>

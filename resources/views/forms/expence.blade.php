@@ -25,6 +25,19 @@
             color: white !important;
             margin: 0 !important;
         }
+        @media screen and (max-width: 767px) {
+            .editBtn {
+        margin-bottom: 5px;
+    width: 100%;
+    }
+    .editBtn .btn{
+        
+    width: 100%;
+    }
+    .pull-right {
+    float: none !important;
+}
+}
     </style>
 </head>
 
@@ -56,8 +69,9 @@
                                         {{ session('error') }}
                                     </div>
                                 @endif
-                                <a class="btn btn-primary btn-xs pull-right py-0 create-expence" data-toggle="modal"
+                                <a class="btn btn-primary btn-xs  py-0 create-expence" data-toggle="modal"
                                     data-target="#myModal">Create Expence</a>
+                                    <div class="table-container" style="max-height: 400px; overflow: auto;">
                                 <table class="table table-responsive table-bordered table-stripped"
                                     style="margin-top:10px;">
                                     <thead>
@@ -82,7 +96,7 @@
                                                     style="display: flex; flex-wrap: wrap; justify-content: space-around; ">
                                                     {{-- <a href="{{ route('employee.show',$employee->id) }}" class="btn btn-primary btn-xs py-0" style="margin:2px;">Show</a>
                             <a href="{{ route('employee.edit',$employee->id) }}" class="btn btn-warning btn-xs py-0" style="margin:2px;">Edit</a> --}}
-                                                    <form action="{{ route('expence.update', $item->id) }}"
+                                                    <form class="editBtn" action="{{ route('expence.update', $item->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('PUT')
@@ -108,6 +122,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                    </div>
                                 {{ $expence->links() }}
                             </div>
                         </div>
