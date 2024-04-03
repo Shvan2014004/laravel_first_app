@@ -87,6 +87,38 @@
 </head>
 
 <body>
+    
+    <nav class="navbar navbar-inverse visible-xs">
+        <div class="container-fluid">
+            <div class="navbar-header" style="background-color:#337ab7; ">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="{{ asset('images/logo.jpeg') }}" class="logo" height="40" width="50" style="border-radius: 50%; margin-left: initial;
+                margin-right: initial; ">
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Dashboard</a></li>
+                    <li><a class="menu" href="{{ route('income.index') }}">Income</a></li>
+                    <li><a class="menu" href="{{ route('expence.store') }}">Expenses</a></li>
+                    <li><a class="menu" href="{{ route('salary.store') }}">Salary</a></li>
+                  
+                    <li class="active"><a href="#">Daily Reports</a></li>
+                    <li><a class="menu" href="{{ route('income.filterByDateRange') }}" >Income</a></li>
+                        <li><a class="menu" href="{{ route('expence.filterByDateRange') }}" >Expense</a></li>
+                            <li><a class="menu" href="{{ route('balance.daily') }}" >Balance Sheet</a></li>
+                            <li class="active"><a href="#">Monthly Reports</a></li>
+                       
+                                <li><a class="menu" href="{{ route('income.filterByMonth') }}" >Income</a></li>
+                                    <li><a class="menu" href="{{ route('expence.filterByMonth') }}" >Expense</a></li>
+                                        <li><a class="menu" href="{{ route('balance.filterByMonth') }}" >Balance Sheet</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     @include('components.authSection')
     <div class="col-sm-3 sidenav hidden-xs" style="width: 15%">
         <img src="{{ asset('images/logo.jpeg') }}" class="logo" height="100" width="100">
