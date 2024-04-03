@@ -18,6 +18,14 @@
                color: white !important;
                margin: 0 !important;
            }
+           @media screen and (max-width: 767px) {
+        .pdfBtn, .csvBtn{
+            width: 100%;
+    }
+    .csvBtn{
+        margin-bottom: 5px!important;
+    }
+}
    </style>
 </head>
 
@@ -33,7 +41,7 @@
                     </div>
                     <div id="app" style="width: 100%">
                         <div class="container" style="width: 100%">
-                            <div class="col-md-2"></div>
+                            {{-- <div class="col-md-2"></div> --}}
                             <div class="col-md-8" style="width: 100%">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
@@ -66,13 +74,14 @@
                                         <div style="margin-top: 10px;">
                                             <!-- Buttons for exporting data -->
                                             <a href="{{ route('income.exportCSV', ['start_date' => $startDate, 'end_date' => $endDate]) }}"
-                                                class="btn btn-primary">Export to CSV</a>
+                                                class="btn btn-primary csvBtn">Export to CSV</a>
 
                                             <a href="{{ route('income.exportPDF', ['start_date' => $startDate, 'end_date' => $endDate]) }}"
-                                                class="btn btn-danger">Export to PDF</a>
+                                                class="btn btn-danger pdfBtn">Export to PDF</a>
                                         </div>
                                         @if($startDate!=null)
                                         @if (count($filteredData) > 0)
+                                        <div class="table-container" style="max-height: 400px; overflow: auto;">
                                             <table class="table table-responsive table-bordered table-stripped"
                                                 style="margin-top:10px;">
                                                 <thead>
@@ -103,6 +112,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                        </div>
                                         @else
                                         <Center>
                                             <h2>No records found.</h2>

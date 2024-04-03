@@ -8,6 +8,20 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style>
+      @media screen and (max-width: 767px) {
+
+.pdfBtn,
+.csvBtn {
+    width: 100%;
+}
+
+.csvBtn {
+    margin-bottom: 5px !important;
+}
+}
+
+    </style>
 </head>
 
 <body style="background: #ddd;">
@@ -44,10 +58,10 @@
                         <div style="margin-top: 10px;">
                             <!-- Buttons for exporting data -->
                             <a href="{{ route('expence.exportCSV', ['start_date' => $startDate, 'end_date' => $endDate]) }}"
-                                class="btn btn-primary">Export to CSV</a>
+                                class="btn btn-primary csvBtn">Export to CSV</a>
 
                             <a href="{{ route('expence.exportPDF', ['start_date' => $startDate, 'end_date' => $endDate]) }}"
-                                class="btn btn-danger">Export to PDF</a>
+                                class="btn btn-danger pdfBtn">Export to PDF</a>
                         </div>
                         @if (count($filteredData) > 0)
                         <table class="table table-responsive table-bordered table-stripped" style="margin-top:10px;">

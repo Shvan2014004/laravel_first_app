@@ -24,12 +24,23 @@
         color: white!important;
         margin: 0!important;
     } 
+    @media screen and (max-width: 767px) {
+            .editBtn {
+        margin-bottom: 5px;
+    width: 100%;
+    }
+    .editBtn .btn{
+        
+    width: 100%;
+    }
+  
+}
     </style>
 </head>
 
 
 <body style="background: #ddd;">
-    <div class="container-fluid">
+    <div class="container-fluid" style="width: 100%">
         <div class="row content">
             @include('components.sidebar')
             <div class="well">
@@ -55,8 +66,9 @@
                                         {{ session('error') }}
                                     </div>
                                 @endif
-                                <a class="btn btn-primary btn-xs pull-right py-0 create-income" data-toggle="modal" 
+                                <a class="btn btn-primary btn-xs py-0 create-income" data-toggle="modal" 
                                     data-target="#myModal">Create Income</a>
+                                    <div class="table-container" style="max-height: 400px; overflow: auto;">
                                 <table class="table table-responsive table-bordered table-stripped"
                                     style="margin-top:10px;">
                                     <thead>
@@ -81,7 +93,7 @@
                                                     style="display: flex; flex-wrap: wrap; justify-content: space-around; ">
                                                     {{-- <a href="{{ route('employee.show',$employee->id) }}" class="btn btn-primary btn-xs py-0" style="margin:2px;">Show</a>
                             <a href="{{ route('employee.edit',$employee->id) }}" class="btn btn-warning btn-xs py-0" style="margin:2px;">Edit</a> --}}
-                                                    <form action="{{ route('income.update', $item->id) }}"
+                                                    <form class="editBtn"  action="{{ route('income.update', $item->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('PUT')
@@ -107,6 +119,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                    </div>
                                 {{ $income->links() }}
                             </div>
                         </div>
