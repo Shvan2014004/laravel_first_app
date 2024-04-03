@@ -78,6 +78,10 @@
             .row.content {
                 height: auto;
             }
+            .mobile
+            {
+                width: 100%!important;
+            }
         }
     </style>
 </head>
@@ -128,7 +132,7 @@
     </div>
     <br>
 
-    <div class="col-sm-9" style="width: 84%; float:inline-end">
+    <div class="col-sm-9 mobile" style="width: 84%; float:inline-end">
 
 
 
